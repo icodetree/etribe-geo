@@ -1,0 +1,152 @@
+import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+
+const NAV_ITEMS = [
+  { href: '#problem', label: '문제' },
+  { href: '#definition', label: 'GEO란' },
+  { href: '#data', label: '데이터' },
+  { href: '#how', label: '작동 원리' },
+  { href: '#tools', label: '도구' },
+  { href: '#positioning', label: '비교' },
+];
+
+export function Navigation() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  return (
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          scrolled ? 'pt-3' : 'pt-5'
+        }`}
+      >
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-5">
+          <a
+            href="#top"
+            className="group flex items-center gap-2.5 text-white"
+            aria-label="eTribe GEO 홈"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-white text-ink-950">
+              <svg
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 12 L12 4 L20 12 L12 20 Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                />
+                <circle cx="12" cy="12" r="2" fill="currentColor" />
+              </svg>
+            </span>
+            <span className="text-[15px] font-semibold tracking-tight">
+              eTribe
+              <span className="ml-1.5 font-display italic font-normal text-brand-500">
+                GEO
+              </span>
+            </span>
+          </a>
+
+          <nav
+            className={`hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] px-1.5 py-1.5 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:flex ${
+              scrolled ? 'shadow-[0_20px_60px_-30px_rgba(0,0,0,0.8)]' : ''
+            }`}
+          >
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="rounded-full px-3.5 py-1.5 text-[13px] font-medium text-ink-300 transition-colors hover:bg-white/5 hover:text-white"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <a
+              href="#cta"
+              className="hidden rounded-full bg-brand-500 px-4 py-2 text-[13px] font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:bg-brand-600 md:inline-flex"
+            >
+              무료 진단
+            </a>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-xl md:hidden"
+              aria-label="메뉴 열기"
+            >
+              <Menu className="h-4.5 w-4.5" strokeWidth={1.75} />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile sheet */}
+      <div
+        className={`fixed inset-0 z-[55] transition-opacity duration-500 md:hidden ${
+          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+        aria-hidden={!open}
+      >
+        <div className="absolute inset-0 bg-ink-950/80 backdrop-blur-2xl" />
+        <div className="relative flex h-full flex-col">
+          <div className="flex items-center justify-end px-5 pt-5">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white"
+              aria-label="메뉴 닫기"
+            >
+              <X className="h-4.5 w-4.5" strokeWidth={1.75} />
+            </button>
+          </div>
+          <nav className="flex flex-1 flex-col items-start justify-center gap-1 px-8">
+            {NAV_ITEMS.map((item, i) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="py-2 text-4xl font-semibold tracking-tight text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1 hover:text-brand-500"
+                style={{
+                  transform: open ? 'translateY(0)' : 'translateY(16px)',
+                  opacity: open ? 1 : 0,
+                  transition:
+                    'transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1)',
+                  transitionDelay: `${i * 60}ms`,
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a
+              href="#cta"
+              onClick={() => setOpen(false)}
+              className="mt-8 inline-flex rounded-full bg-brand-500 px-6 py-3.5 text-[15px] font-medium text-white"
+            >
+              무료 진단 신청하기
+            </a>
+          </nav>
+        </div>
+      </div>
+    </>
+  );
+}
