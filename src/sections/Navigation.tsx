@@ -34,7 +34,7 @@ export function Navigation() {
           scrolled ? 'pt-3' : 'pt-5'
         }`}
       >
-       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5">
+       <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-5 sm:px-8">
           <a
             href="#top"
             className="group flex items-center gap-3 text-white"
@@ -55,7 +55,7 @@ export function Navigation() {
           </a>
 
           <nav
-            className={`hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] px-1.5 py-1.5 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:flex ${
+            className={`hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] px-1.5 py-1.5 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:flex ${
               scrolled ? 'shadow-[0_20px_60px_-30px_rgba(0,0,0,0.8)]' : ''
             }`}
           >
@@ -99,7 +99,7 @@ export function Navigation() {
       >
         <div className="absolute inset-0 bg-ink-950/80 backdrop-blur-2xl" />
         <div className="relative flex h-full flex-col">
-          <div className="flex items-center justify-end px-5 pt-5">
+          <div className="flex items-center justify-end px-5 sm:px-8 pt-5">
             <button
               type="button"
               onClick={() => setOpen(false)}
