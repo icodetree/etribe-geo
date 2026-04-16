@@ -6,15 +6,25 @@ export function CTA() {
       id="cta"
       className="relative isolate overflow-hidden py-32 sm:py-40 lg:py-52"
     >
-      {/* Subtle vignette */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        aria-hidden="true"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% 50%, #131313 0%, #0a0a0a 60%, #060606 100%)',
-        }}
-      />
+      {/* Premium Vignette & Epic Glow */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[#030303]">
+        {/* Deep Mars Brand Red radiating from the bottom */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-[100%] opacity-80"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 100%, rgba(252,0,17,0.18) 0%, rgba(252,0,17,0.04) 40%, transparent 70%)',
+          }}
+        />
+        {/* Soft white focus highlight in the absolute center for the text */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle at 50% 40%, rgba(255,255,255,0.035) 0%, transparent 60%)',
+          }}
+        />
+        {/* Top subtle hairline glow connecting from the previous section */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+      </div>
 
       <div className="relative mx-auto w-full max-w-5xl px-5 text-center sm:px-8">
         <p
