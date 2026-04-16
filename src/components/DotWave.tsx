@@ -26,7 +26,7 @@ const PALETTE_STOPS: PaletteStop[] = [
   { at: 1.0, hue: 10, sat: 72 }, // loop back to Ember
 ];
 
-const CYCLE_SECONDS = 50;
+const CYCLE_SECONDS = 10;
 
 function samplePalette(cycleT: number): { hue: number; sat: number } {
   for (let i = 0; i < PALETTE_STOPS.length - 1; i++) {

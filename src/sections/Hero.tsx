@@ -18,7 +18,7 @@ export function Hero() {
       className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-36 lg:pt-44 lg:pb-28"
     >
       {/* DotWave particle background (30fps, paused off-screen) */}
-      <DotWave className="absolute inset-0 -z-20" />
+      <DotWave className="absolute inset-0 -z-20 opacity-80" />
 
       {/* Readability overlay */}
       <div

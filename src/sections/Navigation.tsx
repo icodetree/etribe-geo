@@ -73,7 +73,7 @@ export function Navigation() {
           <div className="flex items-center gap-2">
             <a
               href="#cta"
-              className="hidden rounded-full bg-white px-4 py-2 text-[13px] font-medium text-ink-950 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:bg-ink-100 md:inline-flex"
+              className="hidden rounded-full bg-brand-red px-4 py-2 text-[13px] font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-110 md:inline-flex transform-gpu antialiased"
             >
               무료 진단
             </a>
@@ -131,7 +131,7 @@ export function Navigation() {
             <a
               href="#cta"
               onClick={() => setOpen(false)}
-              className="mt-8 inline-flex rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-ink-950"
+              className="mt-8 inline-flex rounded-full bg-brand-red px-6 py-3.5 text-[15px] font-medium text-white transition-all duration-500 hover:brightness-110 transform-gpu antialiased"
             >
               무료 진단 신청하기
             </a>
