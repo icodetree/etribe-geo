@@ -79,6 +79,19 @@ export function DotWave({ className = '' }: { className?: string }) {
     const reduced =
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
+    // Tadpoles (maze-travelers)
+    const tadpoles = Array.from({ length: 12 }, () => ({
+      x: Math.floor(Math.random() * 200),
+      y: Math.floor(Math.random() * 80),
+      dirX: 1,
+      dirY: 0,
+      distTurn: Math.floor(2 + Math.random() * 5),
+      distMoved: 0,
+      history: [] as {x: number, y: number}[],
+      speed: 0.18 + Math.random() * 0.18,
+      length: 12 + Math.random() * 15,
+    }));
+
     let raf = 0;
     const startTime = performance.now();
     const FRAME_INTERVAL = 1000 / 30; // 30fps cap
@@ -221,14 +234,106 @@ export function DotWave({ className = '' }: { className?: string }) {
           ctx.arc(baseX, baseY, radius, 0, Math.PI * 2);
           ctx.fill();
 
-          // Rare sparkle — slight hue shift for variety
-          if (radial > 0.75 && Math.random() < 0.003) {
-            ctx.fillStyle = `hsla(${hue + 18}, 90%, 88%, ${Math.min(1, alpha + 0.2)})`;
-            ctx.beginPath();
-            ctx.arc(baseX, baseY, radius + 1.2, 0, Math.PI * 2);
-            ctx.fill();
-          }
         }
+      }
+
+      // ── Layer 6: Tadpole lines navigating grid maze ─────────
+      if (!reduced) {
+        ctx.globalCompositeOperation = 'screen';
+        for (const tdp of tadpoles) {
+          
+          let moveDist = tdp.speed;
+          tdp.distMoved += moveDist;
+
+          // Maze turn logic (perfect grid clamping)
+          const surplus = tdp.distMoved - tdp.distTurn;
+          if (surplus >= 0) {
+            tdp.x += tdp.dirX * (moveDist - surplus);
+            tdp.y += tdp.dirY * (moveDist - surplus);
+            
+            if (tdp.dirX === 1) { // was going right, turn up/down
+               tdp.dirX = 0;
+               tdp.dirY = Math.random() > 0.5 ? 1 : -1;
+               tdp.distTurn = Math.floor(1 + Math.random() * 4);
+            } else {              // was going up/down, turn right
+               tdp.dirX = 1;
+               tdp.dirY = 0;
+               tdp.distTurn = Math.floor(2 + Math.random() * 6);
+            }
+            
+            tdp.distMoved = surplus;
+            tdp.x += tdp.dirX * surplus;
+            tdp.y += tdp.dirY * surplus;
+          } else {
+            tdp.x += tdp.dirX * moveDist;
+            tdp.y += tdp.dirY * moveDist;
+          }
+
+          tdp.history.unshift({x: tdp.x, y: tdp.y});
+          const maxHist = Math.floor(tdp.length / tdp.speed);
+          if (tdp.history.length > maxHist) tdp.history.pop();
+
+          if (tdp.x > cols + 10 || tdp.y < -10 || tdp.y > rows + 10) {
+             tdp.x = -10;
+             tdp.y = Math.floor(Math.random() * rows);
+             tdp.dirX = 1; tdp.dirY = 0;
+             tdp.distMoved = 0;
+             tdp.distTurn = Math.floor(2 + Math.random() * 5);
+             tdp.history.length = 0;
+             continue;
+          }
+
+          if (tdp.history.length < 2) continue;
+
+          const y = tdp.y * gap;
+          const headX = tdp.x * gap;
+
+          const evalI = Math.floor(tdp.x);
+          const evalJ = Math.floor(tdp.y);
+          const w1 = Math.sin(evalI * 0.055 + t * 0.009 + evalJ * 0.025) * 18;
+          const w2 = Math.cos(evalI * 0.025 - evalJ * 0.04 + t * 0.006) * 12;
+          const w3 = Math.sin((evalI + evalJ) * 0.02 - t * 0.004) * 8;
+          const dy = w1 + w2 + w3;
+
+          const bandCenterY = height * 0.42 + dy;
+          const distFromBand = Math.abs(y - bandCenterY);
+          const bandWidth = height * 0.32 + Math.sin(evalI * 0.025 + t * 0.003) * 40;
+
+          if (distFromBand > bandWidth) continue;
+          const bandFade = Math.max(0, 1 - distFromBand / bandWidth);
+          
+          const dx = headX - centerX;
+          const dYc = y - centerY;
+          const radialDist = Math.hypot(dx, dYc);
+          const radial = Math.max(0, 1 - radialDist / (maxDist * 0.55));
+          
+          const intensity = Math.pow(bandFade, 1.2) * (0.35 + Math.pow(radial, 1.5) * 0.9);
+          if (intensity < 0.02) continue;
+
+          // Opacity increased to max 80% as requested
+          const alpha = Math.min(0.8, intensity * 1.0);
+
+          ctx.lineCap = 'butt';
+          ctx.lineJoin = 'miter';
+          ctx.lineWidth = 1.0;
+          for (let k = 0; k < tdp.history.length - 1; k++) {
+             const ptA = tdp.history[k];
+             const ptB = tdp.history[k+1];
+             const segAlpha = alpha * Math.pow((1 - k / tdp.history.length), 1.5);
+             
+             ctx.beginPath();
+             ctx.strokeStyle = `hsla(${palette.hue + 15}, 100%, 85%, ${segAlpha})`;
+             ctx.moveTo(ptA.x * gap, ptA.y * gap);
+             ctx.lineTo(ptB.x * gap, ptB.y * gap);
+             ctx.stroke();
+          }
+          
+          ctx.fillStyle = `hsla(${palette.hue + 25}, 100%, 95%, ${Math.min(1, alpha + 0.2)})`;
+          ctx.beginPath();
+          ctx.arc(headX, y, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalCompositeOperation = 'source-over';
       }
 
     };
