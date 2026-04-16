@@ -75,7 +75,7 @@ export function Navigation() {
               href="#cta"
               className="hidden rounded-full bg-brand-red px-4 py-2 text-[13px] font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-110 md:inline-flex transform-gpu antialiased"
             >
-              무료 진단
+              무료 진단 신청하기
             </a>
             <button
               type="button"

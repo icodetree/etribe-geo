@@ -41,7 +41,7 @@ export function How() {
             className="reveal max-w-3xl text-4xl leading-[1.15] font-semibold tracking-tight break-keep text-white sm:text-5xl lg:text-[3.25rem]"
             style={{ ['--i' as string]: 0 }}
           >
-            GEO는 <span className="display-italic text-white">5단계</span>로
+            GEO는 <span className="font-extrabold text-brand-red">5단계</span>로
             작동합니다.
           </h2>
         </div>

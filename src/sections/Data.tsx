@@ -19,7 +19,7 @@ export function Data() {
               style={{ ['--i' as string]: 0 }}
             >
               말이 아니라{' '}
-              <span className="display-italic text-brand-500">
+              <span className="font-extrabold text-brand-red">
                 데이터
               </span>
               로 확인했습니다.
