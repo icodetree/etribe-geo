@@ -15,7 +15,7 @@ export function CTAButton({
   size?: 'md' | 'lg';
 }) {
   const base =
-    'group relative inline-flex items-center justify-center rounded-full font-medium transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 transform-gpu antialiased';
+    'group relative inline-flex items-center justify-center rounded-full font-medium transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 transform-gpu antialiased';
 
   const sizing = size === 'lg' ? 'px-7 py-4 text-[15px]' : 'px-5 py-3 text-sm';
 

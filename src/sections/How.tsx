@@ -48,7 +48,7 @@ export function How() {
 
         {/* Process Bar Chart Layout */}
         <div className="mt-8 w-full overflow-x-auto pt-16 pb-10 no-scrollbar">
-          <div className="flex items-end h-[450px] lg:h-[550px] min-w-[1000px] lg:min-w-full px-2 lg:px-8">
+          <div className="flex items-end h-[450px] lg:h-[650px] min-w-[1000px] lg:min-w-full px-2 lg:px-8">
             {STEPS.map((s, i) => {
               // Ascending height array for 5 steps
               const heights = ['h-[45%]', 'h-[55%]', 'h-[70%]', 'h-[85%]', 'h-[100%]'];
@@ -70,11 +70,9 @@ export function How() {
                     </span>
                   </div>
 
-                  {/* Overlapping Glass Bar via Gradient Border Wrapper */}
-                  <div className="relative w-full h-full rounded-t-[2rem] bg-gradient-to-b from-white/[0.15] via-white/[0.04] to-transparent p-[1px] transition-all duration-500 hover:from-brand-red/40 hover:shadow-[0_-20px_40px_rgba(255,0,0,0.1)] group [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]">
-                    <div className="relative w-full h-full flex flex-col items-center text-center rounded-t-[2rem] bg-gradient-to-b from-white/[0.08] via-ink-950/60 to-transparent backdrop-blur-xl p-5 lg:p-8 transition-colors duration-500 hover:bg-white/[0.02]">
-                      {/* Inner glowing top highlight */}
-                      <div className="absolute inset-0 rounded-t-[2rem] shadow-[inset_0_2px_10px_rgba(255,255,255,0.15)] pointer-events-none" />
+                  {/* Overlapping Glass Bar MARS padding style */}
+                  <div className="relative w-full h-full rounded-t-[28px] border-t border-x border-white/10 bg-white/[0.02] transition-all duration-500 hover:border-brand-red/90 hover:ring-[3px] hover:ring-brand-red/90 hover:bg-white/[0.04] hover:shadow-[0_-20px_40px_rgba(255,0,0,0.2)] group [mask-image:linear-gradient(to_bottom,black_calc(100%_-_30px),transparent_100%)]">
+                    <div className="relative w-full h-full flex flex-col items-center text-center rounded-t-[22px] bg-gradient-to-b from-white/[0.02] to-transparent backdrop-blur-xl p-5 lg:p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_1px_5px_rgba(255,255,255,0.05)]">
                       
                       <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 pt-2 transition-transform duration-500 group-hover:scale-105 relative z-10">
                         {s.title}

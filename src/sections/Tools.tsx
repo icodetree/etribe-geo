@@ -61,7 +61,7 @@ export function Tools() {
             >
               제안하기 전에, 직접 만들어
               <br />
-              <span className="display-italic text-white">운영</span>했습니다.
+              <span className="font-extrabold text-brand-red">운영</span>했습니다.
             </h2>
           </div>
           <p

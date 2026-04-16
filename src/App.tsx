@@ -11,6 +11,7 @@ import { Positioning } from './sections/Positioning';
 import { Process } from './sections/Process';
 import { CTA } from './sections/CTA';
 import { Footer } from './sections/Footer';
+import { FloatingOrbs } from './components/FloatingOrbs';
 
 export default function App() {
   useReveal();
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <div className="relative min-h-[100dvh] overflow-x-hidden bg-ink-950 text-ink-50">
       <div className="noise" aria-hidden="true" />
+      <FloatingOrbs />
       <Navigation />
       <main>
         <Hero />
