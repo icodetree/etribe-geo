@@ -46,61 +46,54 @@ export function How() {
           </h2>
         </div>
 
-        {/* Desktop: horizontal stepper */}
-        <div className="mt-16 hidden lg:block">
-          <div className="relative">
-            <div className="absolute top-6 right-0 left-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-            <ol className="grid grid-cols-5 gap-6">
-              {STEPS.map((s, i) => (
-                <li
+        {/* Process Bar Chart Layout */}
+        <div className="mt-8 w-full overflow-x-auto pt-16 pb-10 no-scrollbar">
+          <div className="flex items-end h-[450px] lg:h-[550px] min-w-[1000px] lg:min-w-full px-2 lg:px-8">
+            {STEPS.map((s, i) => {
+              // Ascending height array for 5 steps
+              const heights = ['h-[45%]', 'h-[55%]', 'h-[70%]', 'h-[85%]', 'h-[100%]'];
+              // Stack left on top of right (highest z-index on left)
+              const zIndices = [50, 40, 30, 20, 10];
+              // Overlap rightward
+              const overlapClass = i < STEPS.length - 1 ? '-mr-6 lg:-mr-8' : '';
+
+              return (
+                <div
                   key={s.title}
-                  className="reveal relative"
-                  style={{ ['--i' as string]: i + 1 }}
+                  className={`reveal relative flex-1 flex flex-col justify-end ${heights[i]} ${overlapClass}`}
+                  style={{ zIndex: zIndices[i], ['--i' as string]: i + 1 }}
                 >
-                  <div className="flex flex-col items-start">
-                    <div className="relative flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-ink-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                      <div className="h-1.5 w-1.5 rounded-full bg-white/50" />
-                    </div>
-                    <h3 className="mt-7 text-2xl font-semibold tracking-tight text-white">
-                      {s.title}
-                    </h3>
-                    <p className="mt-1.5 text-sm font-medium text-white/70">
-                      {s.lead}
-                    </p>
-                    <p className="mt-4 text-[14px] leading-relaxed break-keep text-ink-400">
-                      {s.body}
-                    </p>
+                  {/* Floating Step Number Label */}
+                  <div className="absolute -top-10 left-0 w-full text-center">
+                    <span className="text-xl lg:text-2xl font-bold tracking-tight text-white/90">
+                      Step 0{i + 1}
+                    </span>
                   </div>
-                </li>
-              ))}
-            </ol>
+
+                  {/* Overlapping Glass Bar via Gradient Border Wrapper */}
+                  <div className="relative w-full h-full rounded-t-[2rem] bg-gradient-to-b from-white/[0.15] via-white/[0.04] to-transparent p-[1px] transition-all duration-500 hover:from-brand-red/40 hover:shadow-[0_-20px_40px_rgba(255,0,0,0.1)] group [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]">
+                    <div className="relative w-full h-full flex flex-col items-center text-center rounded-t-[2rem] bg-gradient-to-b from-white/[0.08] via-ink-950/60 to-transparent backdrop-blur-xl p-5 lg:p-8 transition-colors duration-500 hover:bg-white/[0.02]">
+                      {/* Inner glowing top highlight */}
+                      <div className="absolute inset-0 rounded-t-[2rem] shadow-[inset_0_2px_10px_rgba(255,255,255,0.15)] pointer-events-none" />
+                      
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 pt-2 transition-transform duration-500 group-hover:scale-105 relative z-10">
+                        {s.title}
+                      </h3>
+                      
+                      <p className="text-[13px] sm:text-[15px] font-medium text-white/90 mb-5 lg:mb-6 break-keep relative z-10">
+                        {s.lead}
+                      </p>
+                      
+                      <p className="text-[12px] sm:text-sm text-ink-300 break-keep leading-relaxed pt-5 lg:pt-6 border-t border-white/10 w-[90%] mx-auto relative z-10 opacity-80 group-hover:opacity-100 transition-opacity">
+                        {s.body}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        {/* Mobile: vertical list */}
-        <ol className="mt-14 space-y-4 lg:hidden">
-          {STEPS.map((s, i) => (
-            <li
-              key={s.title}
-              className="reveal relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-8"
-              style={{ ['--i' as string]: i + 1 }}
-            >
-              <div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold tracking-tight text-white">
-                    {s.title}
-                  </h3>
-                  <p className="mt-1 text-sm font-medium text-white/70">
-                    {s.lead}
-                  </p>
-                  <p className="mt-3 text-[14px] leading-relaxed break-keep text-ink-400">
-                    {s.body}
-                  </p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
   );
