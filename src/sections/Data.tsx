@@ -1,4 +1,5 @@
 import { Eyebrow } from '../components/ui/Eyebrow';
+import { ScrollDivider } from '../components/ui/ScrollDivider';
 
 const ROWS = [
   { query: '제품 추천', rate: 0, tone: 'alarm' as const },
@@ -10,6 +11,7 @@ const ROWS = [
 export function Data() {
   return (
     <section id="data" className="relative py-28 sm:py-32 lg:py-40">
+      <ScrollDivider />
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="grid grid-cols-1 items-end gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">

@@ -1,4 +1,5 @@
 import { Eyebrow } from '../components/ui/Eyebrow';
+import { ScrollDivider } from '../components/ui/ScrollDivider';
 
 type Cell = boolean | string | 'partial';
 
@@ -16,7 +17,7 @@ const COLS: ReadonlyArray<Column> = [
   { key: 'geoptie', label: 'Geoptie', sub: 'SaaS · 감사 툴킷' },
   {
     key: 'etribe',
-    label: 'eTribe GEO',
+    label: 'Etribe Mars',
     sub: '분석 + 실행 + 내재화',
     accent: true,
   },
@@ -109,7 +110,7 @@ function CellRender({ v, accent }: { v: Cell; accent?: boolean }) {
     return (
       <span
         className={`text-base font-semibold ${
-          accent ? 'text-white' : 'text-white'
+          accent ? 'text-brand-red' : 'text-white'
         }`}
       >
         있음
@@ -137,19 +138,23 @@ function CellRender({ v, accent }: { v: Cell; accent?: boolean }) {
 
 export function Positioning() {
   return (
-    <section id="positioning" className="relative py-28 sm:py-32 lg:py-40">
+    <section id="positioning" className="relative py-16 sm:py-28 lg:py-40">
+      <ScrollDivider />
+
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
-        <div className="grid grid-cols-1 items-end gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="grid grid-cols-1 items-end gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <Eyebrow>Positioning</Eyebrow>
+
             <h2
-              className="reveal mt-6 text-4xl leading-[1.15] font-semibold tracking-tight break-keep text-white sm:text-5xl lg:text-[3.25rem]"
+              className="reveal mt-6 text-[1.75rem] leading-[1.2] font-semibold tracking-tight break-keep text-white sm:text-4xl sm:leading-[1.15] lg:text-[3.25rem]"
               style={{ ['--i' as string]: 0 }}
             >
-              분석만 하는 도구는 많습니다.
+              분석만 하는{' '}
+              <span className="text-brand-red">도구는 많습니다.</span>
             </h2>
             <p
-              className="reveal mt-6 max-w-xl text-base leading-relaxed text-ink-400 break-keep sm:text-lg"
+              className="reveal mt-4 max-w-xl text-sm leading-relaxed text-ink-400 break-keep sm:mt-6 sm:text-base lg:text-lg"
               style={{ ['--i' as string]: 1 }}
             >
               분석 결과를 실제 AI 가시성으로 연결하는 건 다른 문제입니다.
@@ -160,13 +165,13 @@ export function Positioning() {
             className="reveal flex items-center gap-3 lg:col-span-5 lg:justify-end"
             style={{ ['--i' as string]: 2 }}
           >
-            <span className="inline-flex items-center rounded-full bg-white/5 px-4 py-2 text-[13px] font-medium tracking-wide text-white ring-1 ring-white/15">
+            <span className="inline-flex items-center rounded-full bg-white/5 px-4 py-2 text-[12px] font-medium tracking-wide text-white ring-1 ring-white/15 sm:text-[13px]">
               핵심 차별점 · 실행 대행
             </span>
           </div>
         </div>
 
-        {/* Desktop Table */}
+        {/* ─── Desktop Table ─── */}
         <div
           className="reveal mt-14 hidden overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent lg:block"
           style={{ ['--i' as string]: 3 }}
@@ -181,13 +186,13 @@ export function Positioning() {
                   <th
                     key={c.key}
                     className={`w-[23%] px-6 py-5 text-left ${
-                      c.accent ? 'bg-brand-500/[0.08]' : ''
+                      c.accent ? 'bg-brand-red/[0.06]' : ''
                     }`}
                   >
                     <div className="flex flex-col items-start gap-1">
                       <span
                         className={`text-base font-semibold ${
-                          c.accent ? 'text-brand-500' : 'text-white'
+                          c.accent ? 'text-brand-red' : 'text-white'
                         }`}
                       >
                         {c.label}
@@ -204,7 +209,7 @@ export function Positioning() {
               {ROWS.map((r) => (
                 <tr
                   key={r.metric}
-                  className="border-t border-white/[0.06] transition-colors hover:bg-white/[0.015]"
+                  className="group border-t border-white/[0.06] transition-all duration-300 hover:bg-white/[0.015]"
                 >
                   <td className="px-6 py-5">
                     <div className="flex flex-col gap-0.5">
@@ -220,7 +225,7 @@ export function Positioning() {
                     <td
                       key={c.key}
                       className={`px-6 py-5 ${
-                        c.accent ? 'bg-brand-500/[0.04]' : ''
+                        c.accent ? 'bg-brand-red/[0.03]' : ''
                       }`}
                     >
                       <CellRender v={r.values[c.key]} accent={c.accent} />
@@ -231,33 +236,43 @@ export function Positioning() {
             </tbody>
           </table>
 
-          <div className="border-t border-brand-500/15 bg-brand-500/[0.06] px-8 py-6">
-            <p className="text-base leading-relaxed break-keep text-white sm:text-lg">
+          {/* CTA bar with red accent glow */}
+          <div className="relative border-t border-brand-red/20 bg-brand-red/[0.05] px-8 py-6">
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-red/60 to-transparent"
+              aria-hidden="true"
+            />
+            <p className="text-sm leading-relaxed break-keep text-ink-400 sm:text-base lg:text-lg">
               분석만 하는 SaaS 도구는 많습니다.{' '}
-              <span className="font-semibold text-brand-500">
+              <span className="font-semibold text-white">
                 AI가 실제로 당신의 브랜드를 추천하게 만드는 건 eTribe뿐입니다.
               </span>
             </p>
           </div>
         </div>
 
-        {/* Mobile stacked cards */}
-        <div className="mt-10 space-y-4 lg:hidden">
+        {/* ─── Mobile stacked cards ─── */}
+        <div className="mt-10 space-y-3 sm:space-y-4 lg:hidden">
           {COLS.map((c, i) => (
             <div
               key={c.key}
-              className={`reveal overflow-hidden rounded-3xl border p-6 ${
+              className={`reveal relative overflow-hidden rounded-2xl border p-5 sm:rounded-3xl sm:p-6 ${
                 c.accent
-                  ? 'border-brand-500/30 bg-brand-500/[0.06]'
+                  ? 'border-brand-red/30 bg-brand-red/[0.05]'
                   : 'border-white/10 bg-white/[0.02]'
               }`}
               style={{ ['--i' as string]: i + 3 }}
             >
+              {/* Red top accent line — draws on reveal (eTribe card only) */}
+              {c.accent && (
+                <div className="line-h mb-4 h-[2px] w-full bg-gradient-to-r from-brand-red to-brand-red/20" />
+              )}
+
               <div className="flex items-baseline justify-between">
                 <div>
                   <h3
-                    className={`text-xl font-semibold tracking-tight ${
-                      c.accent ? 'text-brand-500' : 'text-white'
+                    className={`text-lg font-semibold tracking-tight sm:text-xl ${
+                      c.accent ? 'text-brand-red' : 'text-white'
                     }`}
                   >
                     {c.label}
@@ -267,18 +282,18 @@ export function Positioning() {
                   </p>
                 </div>
                 {c.accent && (
-                  <span className="text-[11px] font-medium tracking-[0.2em] text-brand-500 uppercase">
+                  <span className="text-[11px] font-medium tracking-[0.2em] text-brand-red uppercase">
                     권장
                   </span>
                 )}
               </div>
-              <dl className="mt-5 divide-y divide-white/[0.06]">
+              <dl className="mt-4 divide-y divide-white/[0.06] sm:mt-5">
                 {ROWS.map((r) => (
                   <div
                     key={r.metric}
-                    className="flex items-center justify-between gap-4 py-3"
+                    className="flex items-center justify-between gap-4 py-2.5 sm:py-3"
                   >
-                    <dt className="text-[13px] text-ink-400 break-keep">
+                    <dt className="text-[12px] text-ink-400 break-keep sm:text-[13px]">
                       {r.metric}
                     </dt>
                     <dd className="flex-shrink-0 text-right">

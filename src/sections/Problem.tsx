@@ -1,4 +1,5 @@
 import { Eyebrow } from '../components/ui/Eyebrow';
+import { ScrollDivider } from '../components/ui/ScrollDivider';
 
 const POINTS = [
   {
@@ -21,6 +22,7 @@ const POINTS = [
 export function Problem() {
   return (
     <section id="problem" className="relative py-28 sm:py-32 lg:py-40">
+      <ScrollDivider />
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
         {/* Top Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-20">

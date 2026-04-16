@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 const NAV_ITEMS = [
-  { href: '#problem', label: '문제' },
-  { href: '#definition', label: 'GEO란' },
-  { href: '#data', label: '데이터' },
-  { href: '#how', label: '작동 원리' },
-  { href: '#tools', label: '도구' },
-  { href: '#positioning', label: '비교' },
+  { href: '#problem', label: 'Problem' },
+  { href: '#definition', label: 'Definition' },
+  { href: '#data', label: 'Data' },
+  { href: '#how', label: 'Process' },
+  { href: '#tools', label: 'Tools' },
+  { href: '#positioning', label: 'Positioning' },
 ];
 
 export function Navigation() {
@@ -31,7 +31,7 @@ export function Navigation() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          scrolled ? 'pt-3' : 'pt-5'
+          scrolled ? 'pt-3' : 'pt-8'
         }`}
       >
        <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-5 sm:px-8">
@@ -43,13 +43,15 @@ export function Navigation() {
             <img
               src="/logo.png"
               alt="eTribe"
-              className="h-[18px] w-auto object-contain select-none"
+              className={`w-auto object-contain select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                scrolled ? 'h-[18px]' : 'h-[24px]'
+              }`}
               draggable={false}
             />
             <span className="flex items-center gap-1.5 font-sans">
               <span className="text-[13px] font-light text-white/45">×</span>
               <span className="text-[13px] font-semibold tracking-tight text-white">
-                GEO
+                MARS
               </span>
             </span>
           </a>
@@ -73,7 +75,7 @@ export function Navigation() {
           <div className="flex items-center gap-2">
             <a
               href="#cta"
-              className="hidden rounded-full bg-brand-red px-4 py-2 text-[13px] font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-110 md:inline-flex transform-gpu antialiased"
+              className="hidden rounded-full bg-brand-red px-4 py-2 text-[13px] font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:brightness-110 md:inline-flex transform-gpu antialiased"
             >
               무료 진단 신청하기
             </a>

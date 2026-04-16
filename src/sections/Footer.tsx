@@ -3,7 +3,7 @@ export function Footer() {
     <footer className="relative border-t border-white/10 bg-ink-950">
       <div className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 sm:py-24">
         {/* Brand statement — echo of FEEL. CREATE. CONNECT */}
-        <div className="border-b border-white/10 pb-14">
+        <div className="border-b border-white/10 pb-14 text-center">
           <h3 className="font-display text-5xl leading-[0.95] font-medium tracking-tight text-white sm:text-6xl lg:text-[5.5rem]">
             APPEAR.{' '}
             <span className="display-italic text-brand-500">ANSWER.</span>{' '}
@@ -24,7 +24,7 @@ export function Footer() {
               <span className="flex items-center gap-2 font-sans">
                 <span className="text-base font-light text-white/40">×</span>
                 <span className="text-base font-semibold tracking-tight text-white">
-                  GEO
+                  MARS
                 </span>
               </span>
             </div>
@@ -64,7 +64,7 @@ export function Footer() {
               Team
             </p>
             <p className="mt-4 text-[14px] leading-relaxed break-keep text-ink-300">
-              eTribe AX Force TFT —
+              ETRIBE AX Force TFT
               <br />
               디지털 SI 18년, AI에 가장 근접한 소수 인력으로 구성된 전담팀.
             </p>
@@ -73,7 +73,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-start justify-between gap-6 border-t border-white/[0.06] pt-8 sm:flex-row sm:items-center">
           <p className="font-mono text-[11px] tracking-wide text-ink-400">
-            © 2025 eTribe AX Force. All rights reserved.
+            © 2026 ETRIBE AX Force. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-[11px] font-medium tracking-[0.18em] text-ink-400 uppercase">
             <a href="#top" className="transition-colors hover:text-white">

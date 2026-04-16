@@ -37,7 +37,7 @@ export function CTA() {
         >
           지금 AI가 귀사 브랜드를 어떻게 설명하는지 확인해 보세요.
           <br className="hidden sm:block" />
-          플랫폼별 인용률, SOV, 경쟁사 점유율 — 1–2주 이내 리포트 제공.
+          플랫폼별 인용률, SOV, 경쟁사 점유율 1~2주 이내 리포트 제공.
         </p>
 
         <div
