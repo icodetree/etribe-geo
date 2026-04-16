@@ -12,12 +12,6 @@ export function About() {
       id="about"
       className="relative overflow-hidden border-y border-white/5 bg-gradient-to-b from-ink-950 via-ink-900/30 to-ink-950 py-28 sm:py-32 lg:py-40"
     >
-      {/* Ambient decorative glow */}
-      <div
-        className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-brand-500/10 blur-[120px]"
-        aria-hidden="true"
-      />
-
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-20">
           <div className="lg:col-span-7">
@@ -54,9 +48,8 @@ export function About() {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[12px] font-medium tracking-wide text-ink-300 backdrop-blur-xl"
+                  className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[12px] font-medium tracking-wide text-ink-300 backdrop-blur-xl"
                 >
-                  <span className="h-1 w-1 rounded-full bg-brand-500" />
                   {tag}
                 </span>
               ))}

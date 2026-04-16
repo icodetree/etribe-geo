@@ -2,28 +2,24 @@ import { Eyebrow } from '../components/ui/Eyebrow';
 
 const PHASES = [
   {
-    phase: 'Phase 01',
     duration: '1–2일',
     title: '진단',
     body: 'AI 가시성 진단. 인용률·SOV·경쟁사 점유율 측정.',
     deliverable: '현황 리포트',
   },
   {
-    phase: 'Phase 02',
     duration: '1–10일',
     title: '설계',
     body: '인텐트 맵 설계. 우선순위 쿼리 확정.',
     deliverable: '인텐트 맵 + 콘텐츠 플랜',
   },
   {
-    phase: 'Phase 03',
     duration: '5일',
     title: '구현',
     body: '기술 최적화 + GEO 콘텐츠 1차 배포.',
     deliverable: '스키마 · 페이지 · 가이드',
   },
   {
-    phase: 'Phase 04',
     duration: '9주~',
     title: '이행',
     body: '모니터링 시스템 가동, 주간 사이클 내재화.',
@@ -59,20 +55,11 @@ export function Process() {
         <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mt-20 lg:grid-cols-4">
           {PHASES.map((p, i) => (
             <article
-              key={p.phase}
+              key={p.title}
               className="reveal group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-7 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.04] sm:p-8"
               style={{ ['--i' as string]: i + 2 }}
             >
-              <div className="flex items-baseline justify-between">
-                <span className="font-mono text-[11px] tracking-[0.2em] text-brand-500 uppercase">
-                  {p.phase}
-                </span>
-                <span className="font-display text-4xl italic font-medium text-white/15">
-                  / {String(i + 1).padStart(2, '0')}
-                </span>
-              </div>
-
-              <h3 className="mt-5 text-3xl font-semibold tracking-tight text-white">
+              <h3 className="text-3xl font-semibold tracking-tight text-white">
                 {p.title}
               </h3>
               <p className="mt-2 text-[13px] font-medium tracking-wide text-ink-300">
@@ -92,12 +79,6 @@ export function Process() {
                 </p>
               </div>
 
-              {/* Progress dot */}
-              <span
-                className={`absolute top-7 right-7 h-2 w-2 rounded-full ${
-                  i === 0 ? 'bg-brand-500 animate-[pulseRing_3s_ease-in-out_infinite]' : 'bg-white/15'
-                }`}
-              />
             </article>
           ))}
         </div>

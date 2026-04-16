@@ -62,14 +62,11 @@ export function Data() {
           style={{ ['--i' as string]: 3 }}
         >
           <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.02] px-6 py-4 sm:px-8">
-            <div className="flex items-center gap-3">
-              <span className="h-2 w-2 rounded-full bg-brand-500 animate-[pulseRing_3s_ease-in-out_infinite]" />
-              <span className="font-display text-sm tracking-[0.25em] text-ink-300 uppercase">
-                Live Crawl · S社 실측
-              </span>
-            </div>
+            <span className="font-display text-sm tracking-[0.25em] text-ink-300 uppercase">
+              Live Crawl · S社 실측
+            </span>
             <span className="font-mono text-[11px] text-ink-400">
-              2025 · 900 responses
+              2026 · 900 responses
             </span>
           </div>
 
@@ -80,10 +77,7 @@ export function Data() {
                 className="reveal grid grid-cols-12 items-center gap-4 px-6 py-6 transition-colors duration-500 hover:bg-white/[0.02] sm:px-8 sm:py-7"
                 style={{ ['--i' as string]: i + 4 }}
               >
-                <div className="col-span-12 flex items-baseline gap-3 sm:col-span-4">
-                  <span className="font-mono text-[12px] text-ink-400">
-                    Q0{i + 1}
-                  </span>
+                <div className="col-span-12 sm:col-span-4">
                   <span className="text-base font-semibold text-white sm:text-lg">
                     {r.query}
                   </span>

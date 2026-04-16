@@ -81,9 +81,6 @@ export function Definition() {
                       {c.kor}
                     </p>
                   </div>
-                  <span className="font-display text-3xl italic text-white/15">
-                    / 0{i + 1}
-                  </span>
                 </div>
 
                 <div

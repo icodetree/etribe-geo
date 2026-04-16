@@ -1,5 +1,4 @@
 import { CTAButton } from '../components/ui/Button';
-import { DotWave } from '../components/DotWave';
 
 const PLATFORMS = ['ChatGPT', 'Perplexity', 'Claude', 'Gemini'];
 
@@ -9,42 +8,17 @@ export function Hero() {
       id="top"
       className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-36 lg:pt-44 lg:pb-28"
     >
-      {/* Layer 1 — Deep navy/purple base gradient */}
+      {/* Minimal monochrome background */}
       <div
-        className="pointer-events-none absolute inset-0 -z-30"
+        className="pointer-events-none absolute inset-0 -z-10"
         aria-hidden="true"
         style={{
           background:
-            'radial-gradient(ellipse 70% 80% at 78% 22%, #2a1454 0%, #160a30 35%, #0a061b 70%, #07040f 100%)',
+            'radial-gradient(ellipse 80% 70% at 75% 25%, #1a1a1a 0%, #0c0c0c 55%, #060606 100%)',
         }}
       />
 
-      {/* Layer 2 — Magenta hotspot glow (top-right) */}
-      <div
-        className="pointer-events-none absolute -top-32 -right-40 -z-20 h-[44rem] w-[44rem] rounded-full sm:h-[58rem] sm:w-[58rem]"
-        aria-hidden="true"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(229,72,189,0.32) 0%, rgba(150,50,200,0.18) 35%, transparent 70%)',
-          filter: 'blur(40px)',
-        }}
-      />
-      <div
-        className="pointer-events-none absolute top-40 right-10 -z-20 h-[20rem] w-[20rem] rounded-full"
-        aria-hidden="true"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(229,38,44,0.22) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-      />
-
-      {/* Layer 3 — Dot-wave canvas */}
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <DotWave />
-      </div>
-
-      {/* Layer 4 — Subtle bottom fade for legibility */}
+      {/* Bottom fade for next-section transition */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-ink-950 to-transparent"
         aria-hidden="true"
@@ -61,12 +35,12 @@ export function Hero() {
           </span>
         </div>
 
-        {/* English signature slogan — single line */}
+        {/* English signature slogan */}
         <p
           className="reveal text-3xl leading-none font-bold tracking-[-0.02em] text-white/95 sm:text-4xl lg:text-[2.75rem]"
           style={{ ['--i' as string]: 1 }}
         >
-          Appear in <span className="text-brand-500">AI</span> answers.
+          Appear in AI answers.
         </p>
 
         {/* Divider */}
@@ -80,15 +54,13 @@ export function Hero() {
           className="reveal mt-10 max-w-5xl text-5xl leading-[1.1] font-bold tracking-tight break-keep text-white sm:text-6xl lg:text-[5rem] xl:text-[5.75rem]"
           style={{ ['--i' as string]: 3 }}
         >
-          AI에게 물어봤을 때,
-          <br />
           <span className="relative whitespace-nowrap">
             <span className="relative z-10">당신의 브랜드</span>
-            <span className="absolute right-0 bottom-2 left-0 z-0 h-[0.28em] bg-brand-500/80" />
+            <span className="absolute right-0 bottom-2 left-0 z-0 h-[0.28em] bg-white/80" />
           </span>
-          가
           <br />
-          답변에 나옵니까?
+          AI 답변에 <br />
+          노출되고 있나요?
         </h1>
 
         {/* Sub copy + CTA grid */}
@@ -98,10 +70,10 @@ export function Hero() {
             style={{ ['--i' as string]: 4 }}
           >
             <p className="max-w-2xl text-base leading-relaxed text-white/70 break-keep sm:text-lg">
-              검색의 시대는 끝났습니다. 이제 답변의 시대입니다.<br className="hidden sm:block" />
-              <span className="font-semibold text-white">
-                GEO는 인공지능
-              </span>이 당신의 브랜드를 가장 먼저 추천하도록 설계합니다.
+              검색의 시대는 끝났습니다. 이제 답변의 시대입니다.
+              <br className="hidden sm:block" />
+              <span className="font-semibold text-white">GEO는 인공지능</span>이
+              당신의 브랜드를 가장 먼저 추천하도록 설계합니다.
             </p>
           </div>
 
@@ -111,7 +83,7 @@ export function Hero() {
           >
             <div className="flex flex-wrap items-center gap-3">
               <CTAButton href="#cta">무료 진단 시작하기</CTAButton>
-              <CTAButton href="#how" variant="outline" icon={false}>
+              <CTAButton href="#how" variant="outline">
                 작동 원리 보기
               </CTAButton>
             </div>
@@ -121,10 +93,12 @@ export function Hero() {
                 4개 AI 플랫폼 실측 크롤링 운영
               </p>
               <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px] font-medium text-white/80">
-                {PLATFORMS.map((p) => (
-                  <span key={p} className="flex items-center gap-1.5">
-                    <span className="block h-1 w-1 rounded-full bg-brand-500" />
+                {PLATFORMS.map((p, i) => (
+                  <span key={p}>
                     {p}
+                    {i < PLATFORMS.length - 1 && (
+                      <span className="ml-5 text-white/30">/</span>
+                    )}
                   </span>
                 ))}
               </div>

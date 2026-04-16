@@ -14,26 +14,16 @@ export function Footer() {
         <div className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-12">
           {/* Brand block */}
           <div className="md:col-span-5">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-white text-ink-950">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M4 12 L12 4 L20 12 L12 20 Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                  <circle cx="12" cy="12" r="2" fill="currentColor" />
-                </svg>
-              </span>
-              <span className="text-base font-semibold tracking-tight text-white">
-                eTribe
-                <span className="ml-1.5 font-display italic font-normal text-brand-500">
+            <div className="flex items-center gap-3.5">
+              <img
+                src="/logo.png"
+                alt="eTribe"
+                className="h-6 w-auto object-contain select-none"
+                draggable={false}
+              />
+              <span className="flex items-center gap-2 font-sans">
+                <span className="text-base font-light text-white/40">×</span>
+                <span className="text-base font-semibold tracking-tight text-white">
                   GEO
                 </span>
               </span>

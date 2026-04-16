@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
 
 const NAV_ITEMS = [
   { href: '#problem', label: '문제' },
@@ -35,31 +34,21 @@ export function Navigation() {
           scrolled ? 'pt-3' : 'pt-5'
         }`}
       >
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-5">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5">
           <a
             href="#top"
-            className="group flex items-center gap-2.5 text-white"
+            className="group flex items-center gap-3 text-white"
             aria-label="eTribe GEO 홈"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-white text-ink-950">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-4 w-4"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M4 12 L12 4 L20 12 L12 20 Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                />
-                <circle cx="12" cy="12" r="2" fill="currentColor" />
-              </svg>
-            </span>
-            <span className="text-[15px] font-semibold tracking-tight">
-              eTribe
-              <span className="ml-1.5 font-display italic font-normal text-brand-500">
+            <img
+              src="/logo.png"
+              alt="eTribe"
+              className="h-[18px] w-auto object-contain select-none"
+              draggable={false}
+            />
+            <span className="flex items-center gap-1.5 font-sans">
+              <span className="text-[13px] font-light text-white/45">×</span>
+              <span className="text-[13px] font-semibold tracking-tight text-white">
                 GEO
               </span>
             </span>
@@ -84,17 +73,18 @@ export function Navigation() {
           <div className="flex items-center gap-2">
             <a
               href="#cta"
-              className="hidden rounded-full bg-brand-500 px-4 py-2 text-[13px] font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:bg-brand-600 md:inline-flex"
+              className="hidden rounded-full bg-white px-4 py-2 text-[13px] font-medium text-ink-950 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:bg-ink-100 md:inline-flex"
             >
               무료 진단
             </a>
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-xl md:hidden"
+              className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-full border border-white/10 bg-white/5 text-white backdrop-blur-xl md:hidden"
               aria-label="메뉴 열기"
             >
-              <Menu className="h-4.5 w-4.5" strokeWidth={1.75} />
+              <span className="block h-px w-4 bg-white" />
+              <span className="block h-px w-4 bg-white" />
             </button>
           </div>
         </div>
@@ -113,10 +103,11 @@ export function Navigation() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white"
               aria-label="메뉴 닫기"
             >
-              <X className="h-4.5 w-4.5" strokeWidth={1.75} />
+              <span className="absolute block h-px w-4 rotate-45 bg-white" />
+              <span className="absolute block h-px w-4 -rotate-45 bg-white" />
             </button>
           </div>
           <nav className="flex flex-1 flex-col items-start justify-center gap-1 px-8">
@@ -125,7 +116,7 @@ export function Navigation() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="py-2 text-4xl font-semibold tracking-tight text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1 hover:text-brand-500"
+                className="py-2 text-4xl font-semibold tracking-tight text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1 hover:text-white/60"
                 style={{
                   transform: open ? 'translateY(0)' : 'translateY(16px)',
                   opacity: open ? 1 : 0,
@@ -140,7 +131,7 @@ export function Navigation() {
             <a
               href="#cta"
               onClick={() => setOpen(false)}
-              className="mt-8 inline-flex rounded-full bg-brand-500 px-6 py-3.5 text-[15px] font-medium text-white"
+              className="mt-8 inline-flex rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-ink-950"
             >
               무료 진단 신청하기
             </a>

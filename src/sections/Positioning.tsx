@@ -1,4 +1,3 @@
-import { Check, Minus } from 'lucide-react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 
 type Cell = boolean | string | 'partial';
@@ -109,27 +108,20 @@ function CellRender({ v, accent }: { v: Cell; accent?: boolean }) {
   if (v === true) {
     return (
       <span
-        className={`inline-flex h-7 w-7 items-center justify-center rounded-full ${
-          accent ? 'bg-brand-500 text-white' : 'bg-white/10 text-white'
+        className={`text-base font-semibold ${
+          accent ? 'text-white' : 'text-white'
         }`}
       >
-        <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
+        있음
       </span>
     );
   }
   if (v === false) {
-    return (
-      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.04] text-ink-400">
-        <Minus className="h-3.5 w-3.5" strokeWidth={2} />
-      </span>
-    );
+    return <span className="text-base font-normal text-white/25">없음</span>;
   }
   if (v === 'partial') {
     return (
-      <span className="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-[12px] font-medium text-ink-300 ring-1 ring-white/10">
-        <span className="h-1 w-1 rounded-full bg-amber-400" />
-        부분
-      </span>
+      <span className="text-[13px] font-medium text-white/55">부분</span>
     );
   }
   return (
@@ -168,8 +160,7 @@ export function Positioning() {
             className="reveal flex items-center gap-3 lg:col-span-5 lg:justify-end"
             style={{ ['--i' as string]: 2 }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-4 py-2 text-[13px] font-medium text-brand-500 ring-1 ring-brand-500/20">
-              <span className="h-1.5 w-1.5 animate-[pulseRing_3s_ease-in-out_infinite] rounded-full bg-brand-500" />
+            <span className="inline-flex items-center rounded-full bg-white/5 px-4 py-2 text-[13px] font-medium tracking-wide text-white ring-1 ring-white/15">
               핵심 차별점 · 실행 대행
             </span>
           </div>

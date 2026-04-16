@@ -1,21 +1,17 @@
-import { TrendingDown, AlertTriangle, Radar } from 'lucide-react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 
 const POINTS = [
   {
-    icon: TrendingDown,
     headline: '기존 SEO 키워드 최적화 → AI 가시성에 효과 없음',
     source: 'Princeton GEO 논문, ACM KDD 2024',
   },
   {
-    icon: Radar,
     headline: '통계·출처 기반 콘텐츠 → AI 가시성 최대 +115% 향상',
     source: '동일 연구, 8가지 GEO 전략 실험 결과',
   },
   {
-    icon: AlertTriangle,
     headline: 'AI 채널의 SOV(점유율)는 지금 이 순간 무주공산',
-    source: '한국 시장 실측 모니터링, 2025',
+    source: '한국 시장 실측 모니터링, 2026',
   },
 ];
 
@@ -27,19 +23,14 @@ export function Problem() {
           {/* Left: numbering + headline */}
           <div className="lg:col-span-5">
             <div className="sticky top-32">
-              <div className="flex items-baseline gap-4">
-                <span className="font-display text-7xl italic font-medium text-brand-500 lg:text-8xl">
-                  02
-                </span>
-                <Eyebrow>Problem</Eyebrow>
-              </div>
+              <Eyebrow>Problem</Eyebrow>
               <h2
                 className="reveal mt-8 text-4xl leading-[1.15] font-semibold tracking-tight break-keep text-white sm:text-5xl lg:text-[3.25rem]"
                 style={{ ['--i' as string]: 0 }}
               >
                 검색이 바뀌었는데,
                 <br />
-                <span className="display-italic text-brand-500">전략</span>은
+                <span className="display-italic text-white">전략</span>은
                 그대로입니까?
               </h2>
               <p
@@ -53,7 +44,7 @@ export function Problem() {
             </div>
           </div>
 
-          {/* Right: 3 point cards — asymmetric stack */}
+          {/* Right: 3 point cards */}
           <div className="lg:col-span-7">
             <ol className="space-y-4">
               {POINTS.map((p, i) => (
@@ -63,13 +54,7 @@ export function Problem() {
                   style={{ ['--i' as string]: i + 1 }}
                 >
                   <div className="relative rounded-[22px] bg-gradient-to-b from-white/[0.04] to-transparent p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-9">
-                    <div className="flex items-start gap-5 sm:gap-6">
-                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-brand-500/10 ring-1 ring-brand-500/20">
-                        <p.icon
-                          className="h-5 w-5 text-brand-500"
-                          strokeWidth={1.5}
-                        />
-                      </div>
+                    <div className="flex items-start">
                       <div className="flex-1">
                         <p className="text-lg leading-snug font-semibold break-keep text-white sm:text-xl">
                           {p.headline}
@@ -78,9 +63,6 @@ export function Problem() {
                           — {p.source}
                         </p>
                       </div>
-                      <span className="hidden font-display text-5xl leading-none text-white/10 sm:block">
-                        0{i + 1}
-                      </span>
                     </div>
                   </div>
                 </li>

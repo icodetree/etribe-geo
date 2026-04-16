@@ -4,9 +4,12 @@
   --font-sans:
     'Pretendard', 'Pretendard Variable', -apple-system, BlinkMacSystemFont,
     system-ui, sans-serif;
-  --font-display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-display:
+    'Pretendard', 'Pretendard Variable', -apple-system, BlinkMacSystemFont,
+    system-ui, sans-serif;
   --font-mono:
-    'JetBrains Mono', 'SF Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    'Pretendard', 'Pretendard Variable', -apple-system, BlinkMacSystemFont,
+    system-ui, sans-serif;
 
   --color-ink-950: #0a0a0a;
   --color-ink-900: #111111;
@@ -18,11 +21,13 @@
   --color-ink-100: #f5f5f5;
   --color-ink-50: #fafafa;
 
-  --color-brand-50: #fff1f0;
-  --color-brand-400: #f06a6a;
-  --color-brand-500: #e5262c;
-  --color-brand-600: #c8181f;
-  --color-brand-700: #a31217;
+  /* Monochrome remap — brand-* now resolves to whites/grays
+     so existing class names keep working without churn. */
+  --color-brand-50: #18181b;
+  --color-brand-400: #d4d4d4;
+  --color-brand-500: #ffffff;
+  --color-brand-600: #f5f5f5;
+  --color-brand-700: #e5e5e5;
 
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -110,8 +115,8 @@
   }
   body::selection,
   *::selection {
-    background: var(--color-brand-500);
-    color: white;
+    background: var(--color-ink-50);
+    color: var(--color-ink-950);
   }
   h1,
   h2,
@@ -165,17 +170,12 @@
     background-image:
       radial-gradient(
         ellipse 50% 40% at 20% 10%,
-        rgba(229, 38, 44, 0.18),
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 50% 50% at 80% 20%,
-        rgba(229, 38, 44, 0.07),
+        rgba(255, 255, 255, 0.04),
         transparent 60%
       ),
       radial-gradient(
         ellipse 40% 30% at 50% 80%,
-        rgba(229, 38, 44, 0.12),
+        rgba(255, 255, 255, 0.02),
         transparent 60%
       );
   }
@@ -199,9 +199,7 @@
   }
 
   .display-italic {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 400;
+    font-weight: 300;
   }
 
   .tabular {
@@ -212,8 +210,8 @@
     background-image: linear-gradient(
       180deg,
       transparent 65%,
-      var(--color-brand-500) 65%,
-      var(--color-brand-500) 92%,
+      rgba(255, 255, 255, 0.85) 65%,
+      rgba(255, 255, 255, 0.85) 92%,
       transparent 92%
     );
     background-repeat: no-repeat;
