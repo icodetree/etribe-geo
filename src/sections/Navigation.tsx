@@ -34,7 +34,7 @@ export function Navigation() {
           scrolled ? 'pt-3' : 'pt-5'
         }`}
       >
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5">
+       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5">
           <a
             href="#top"
             className="group flex items-center gap-3 text-white"

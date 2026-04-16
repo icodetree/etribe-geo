@@ -19,11 +19,11 @@ import { useEffect, useRef } from 'react';
 type PaletteStop = { at: number; hue: number; sat: number };
 
 const PALETTE_STOPS: PaletteStop[] = [
-  { at: 0.0, hue: 10, sat: 72 }, // Ember — brand coral
-  { at: 0.28, hue: 38, sat: 76 }, // Gold — warm amber
-  { at: 0.52, hue: 170, sat: 60 }, // Mint — teal
-  { at: 0.76, hue: 205, sat: 68 }, // Steel — cyan blue
-  { at: 1.0, hue: 10, sat: 72 }, // loop back to Ember
+  { at: 0.0, hue: 10, sat: 12 }, // Ember — warm gray
+  { at: 0.28, hue: 38, sat: 14 }, // Gold — warm gray
+  { at: 0.52, hue: 170, sat: 10 }, // Mint — cool gray
+  { at: 0.76, hue: 205, sat: 12 }, // Steel — cool gray
+  { at: 1.0, hue: 10, sat: 12 }, // loop back to Ember
 ];
 
 const CYCLE_SECONDS = 50;
@@ -56,6 +56,7 @@ export function DotWave({ className = '' }: { className?: string }) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
     let height = 0;
+    let isVisible = true;
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -68,13 +69,28 @@ export function DotWave({ className = '' }: { className?: string }) {
 
     resize();
 
+    // Pause when off-screen to save CPU
+    const io = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 },
+    );
+    io.observe(canvas);
+
     const reduced =
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
     let raf = 0;
     const startTime = performance.now();
+    const FRAME_INTERVAL = 1000 / 30; // 30fps cap
+    let lastFrame = 0;
 
     const draw = (now: number) => {
+      raf = requestAnimationFrame(draw);
+
+      // Skip if off-screen or throttled
+      if (!isVisible) return;
+      if (now - lastFrame < FRAME_INTERVAL) return;
+      lastFrame = now;
       const elapsed = (now - startTime) / 1000;
       const cycleT = (elapsed / CYCLE_SECONDS) % 1;
       const palette = samplePalette(cycleT);
@@ -97,11 +113,11 @@ export function DotWave({ className = '' }: { className?: string }) {
       );
       bgGrad.addColorStop(
         0,
-        `hsla(${palette.hue}, ${palette.sat * 0.4}%, 10%, 0.95)`,
+        `hsla(${palette.hue}, ${palette.sat * 0.3}%, 10%, 0.95)`,
       );
       bgGrad.addColorStop(
         0.5,
-        `hsla(${palette.hue}, ${palette.sat * 0.2}%, 5%, 0.5)`,
+        `hsla(${palette.hue}, ${palette.sat * 0.15}%, 5%, 0.5)`,
       );
       bgGrad.addColorStop(1, `hsla(0, 0%, 2%, 0)`);
       ctx.fillStyle = bgGrad;
@@ -118,11 +134,11 @@ export function DotWave({ className = '' }: { className?: string }) {
       );
       glowGrad.addColorStop(
         0,
-        `hsla(${palette.hue}, ${palette.sat}%, 55%, 0.26)`,
+        `hsla(${palette.hue}, ${palette.sat}%, 55%, 0.18)`,
       );
       glowGrad.addColorStop(
         0.35,
-        `hsla(${palette.hue + 15}, ${palette.sat}%, 48%, 0.12)`,
+        `hsla(${palette.hue + 15}, ${palette.sat}%, 48%, 0.08)`,
       );
       glowGrad.addColorStop(1, `hsla(0, 0%, 0%, 0)`);
       ctx.fillStyle = glowGrad;
@@ -141,14 +157,14 @@ export function DotWave({ className = '' }: { className?: string }) {
       );
       accentGrad.addColorStop(
         0,
-        `hsla(${accentHue}, ${palette.sat * 0.7}%, 45%, 0.1)`,
+        `hsla(${accentHue}, ${palette.sat * 0.7}%, 45%, 0.06)`,
       );
       accentGrad.addColorStop(1, `hsla(0, 0%, 0%, 0)`);
       ctx.fillStyle = accentGrad;
       ctx.fillRect(0, 0, width, height);
 
       // ── Layer 5: dot-wave particle field ──────────────────
-      const gap = width < 640 ? 11 : 9;
+      const gap = width < 640 ? 16 : 14;
       const cols = Math.ceil(width / gap) + 2;
       const rows = Math.ceil(height / gap) + 2;
 
@@ -194,11 +210,11 @@ export function DotWave({ className = '' }: { className?: string }) {
           const spatialShift = (bias - 0.5) * 26;
 
           const hue = palette.hue + spatialShift;
-          const sat = palette.sat + bandFade * 12;
+          const sat = palette.sat + bandFade * 6;
           const light = 62 + bandFade * 28;
 
           const radius = 0.6 + intensity * 1.5;
-          const alpha = Math.min(0.95, intensity * 0.85);
+          const alpha = Math.min(0.95, intensity * 0.65);
 
           ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${alpha})`;
           ctx.beginPath();
@@ -206,8 +222,8 @@ export function DotWave({ className = '' }: { className?: string }) {
           ctx.fill();
 
           // Rare sparkle — slight hue shift for variety
-          if (radial > 0.75 && Math.random() < 0.004) {
-            ctx.fillStyle = `hsla(${hue + 18}, 90%, 88%, ${Math.min(1, alpha + 0.2)})`;
+          if (radial > 0.75 && Math.random() < 0.003) {
+            ctx.fillStyle = `hsla(${hue + 18}, 30%, 88%, ${Math.min(1, alpha + 0.15)})`;
             ctx.beginPath();
             ctx.arc(baseX, baseY, radius + 1.2, 0, Math.PI * 2);
             ctx.fill();
@@ -215,7 +231,6 @@ export function DotWave({ className = '' }: { className?: string }) {
         }
       }
 
-      raf = requestAnimationFrame(draw);
     };
 
     raf = requestAnimationFrame(draw);
@@ -225,6 +240,7 @@ export function DotWave({ className = '' }: { className?: string }) {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', onResize);
+      io.disconnect();
     };
   }, []);
 

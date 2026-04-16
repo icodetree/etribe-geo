@@ -1,6 +1,15 @@
 import { CTAButton } from '../components/ui/Button';
+import { AnimatedCounter } from '../components/ui/AnimatedCounter';
+import { DotWave } from '../components/DotWave';
 
 const PLATFORMS = ['ChatGPT', 'Perplexity', 'Claude', 'Gemini'];
+
+const STATS = [
+  { value: 25, suffix: '일', label: '실측 모니터링 기간' },
+  { value: 900, suffix: '건', label: '수집 응답 데이터' },
+  { value: 0, suffix: '%', label: '경쟁사 추천 인용률' },
+  { value: 115, prefix: '+', suffix: '%', label: 'GEO 적용 가시성 향상' },
+];
 
 export function Hero() {
   return (
@@ -8,13 +17,16 @@ export function Hero() {
       id="top"
       className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-36 lg:pt-44 lg:pb-28"
     >
-      {/* Minimal monochrome background */}
+      {/* DotWave particle background (30fps, paused off-screen) */}
+      <DotWave className="absolute inset-0 -z-20" />
+
+      {/* Readability overlay — darkens top/bottom, clears center for particles */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 -z-[15]"
         aria-hidden="true"
         style={{
           background:
-            'radial-gradient(ellipse 80% 70% at 75% 25%, #1a1a1a 0%, #0c0c0c 55%, #060606 100%)',
+            'linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.15) 40%, rgba(10,10,10,0.4) 100%)',
         }}
       />
 
@@ -51,29 +63,29 @@ export function Hero() {
 
         {/* Korean main headline */}
         <h1
-          className="reveal mt-10 max-w-5xl text-5xl leading-[1.1] font-bold tracking-tight break-keep text-white sm:text-6xl lg:text-[5rem] xl:text-[5.75rem]"
+          className="reveal mt-10 max-w-5xl text-[2.75rem] leading-[1.12] font-bold tracking-tight break-keep text-white sm:text-6xl lg:text-[5rem] xl:text-[5.75rem]"
           style={{ ['--i' as string]: 3 }}
         >
-          <span className="relative whitespace-nowrap">
-            <span className="relative z-10">당신의 브랜드</span>
-            <span className="absolute right-0 bottom-2 left-0 z-0 h-[0.28em] bg-white/80" />
-          </span>
+          AI에게 물어봤을 때
           <br />
-          AI 답변에 <br />
-          노출되고 있나요?
+          <span className="accent-underline">당신의 브랜드</span>가
+          <br />
+          답변에 나옵니까?
         </h1>
 
         {/* Sub copy + CTA grid */}
-        <div className="mt-14 grid grid-cols-1 gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-14 grid grid-cols-1 gap-10 lg:mt-20 lg:grid-cols-12 lg:items-end lg:gap-16">
           <div
             className="reveal lg:col-span-7"
             style={{ ['--i' as string]: 4 }}
           >
             <p className="max-w-2xl text-base leading-relaxed text-white/70 break-keep sm:text-lg">
-              검색의 시대는 끝났습니다. 이제 답변의 시대입니다.
+              생성형 AI가 고객의 첫 번째 검색창이 된 지금,
               <br className="hidden sm:block" />
-              <span className="font-semibold text-white">GEO는 인공지능</span>이
-              당신의 브랜드를 가장 먼저 추천하도록 설계합니다.
+              <span className="font-semibold text-white">
+                노출되지 않으면 존재하지 않는 것
+              </span>
+              과 같습니다.
             </p>
           </div>
 
@@ -82,7 +94,9 @@ export function Hero() {
             style={{ ['--i' as string]: 5 }}
           >
             <div className="flex flex-wrap items-center gap-3">
-              <CTAButton href="#cta">무료 진단 시작하기</CTAButton>
+              <CTAButton href="#cta">
+                우리 브랜드 AI 가시성 무료 진단받기
+              </CTAButton>
               <CTAButton href="#how" variant="outline">
                 작동 원리 보기
               </CTAButton>
@@ -111,21 +125,19 @@ export function Hero() {
           className="reveal mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md sm:grid-cols-4"
           style={{ ['--i' as string]: 6 }}
         >
-          {[
-            { k: '25일', v: '실측 모니터링 기간' },
-            { k: '900건', v: '수집 응답 데이터' },
-            { k: '0%', v: '경쟁사 추천 인용률' },
-            { k: '+115%', v: 'GEO 적용 가시성 향상' },
-          ].map((s) => (
+          {STATS.map((s) => (
             <div
-              key={s.v}
+              key={s.label}
               className="bg-ink-950/40 p-5 backdrop-blur-md transition-colors duration-500 hover:bg-white/[0.04] sm:p-7"
             >
-              <div className="text-3xl leading-none font-bold tracking-tight text-white tabular sm:text-4xl">
-                {s.k}
-              </div>
+              <AnimatedCounter
+                value={s.value}
+                prefix={s.prefix}
+                suffix={s.suffix}
+                className="text-3xl leading-none font-bold tracking-tight text-white tabular sm:text-4xl"
+              />
               <div className="mt-2.5 text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase">
-                {s.v}
+                {s.label}
               </div>
             </div>
           ))}
