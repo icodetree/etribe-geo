@@ -19,11 +19,11 @@ import { useEffect, useRef } from 'react';
 type PaletteStop = { at: number; hue: number; sat: number };
 
 const PALETTE_STOPS: PaletteStop[] = [
-  { at: 0.0, hue: 10, sat: 12 }, // Ember — warm gray
-  { at: 0.28, hue: 38, sat: 14 }, // Gold — warm gray
-  { at: 0.52, hue: 170, sat: 10 }, // Mint — cool gray
-  { at: 0.76, hue: 205, sat: 12 }, // Steel — cool gray
-  { at: 1.0, hue: 10, sat: 12 }, // loop back to Ember
+  { at: 0.0, hue: 10, sat: 72 }, // Ember — coral
+  { at: 0.28, hue: 38, sat: 76 }, // Gold — warm amber
+  { at: 0.52, hue: 170, sat: 60 }, // Mint — teal
+  { at: 0.76, hue: 205, sat: 68 }, // Steel — cyan blue
+  { at: 1.0, hue: 10, sat: 72 }, // loop back to Ember
 ];
 
 const CYCLE_SECONDS = 50;
@@ -104,20 +104,20 @@ export function DotWave({ className = '' }: { className?: string }) {
 
       // ── Layer 2: ambient radial wash (hue-tinted) ─────────
       const bgGrad = ctx.createRadialGradient(
-        width * 0.78,
-        height * 0.3,
+        width * 0.5,
+        height * 0.4,
         0,
-        width * 0.78,
-        height * 0.3,
+        width * 0.5,
+        height * 0.4,
         Math.max(width, height),
       );
       bgGrad.addColorStop(
         0,
-        `hsla(${palette.hue}, ${palette.sat * 0.3}%, 10%, 0.95)`,
+        `hsla(${palette.hue}, ${palette.sat * 0.4}%, 10%, 0.95)`,
       );
       bgGrad.addColorStop(
         0.5,
-        `hsla(${palette.hue}, ${palette.sat * 0.15}%, 5%, 0.5)`,
+        `hsla(${palette.hue}, ${palette.sat * 0.2}%, 5%, 0.5)`,
       );
       bgGrad.addColorStop(1, `hsla(0, 0%, 2%, 0)`);
       ctx.fillStyle = bgGrad;
@@ -125,20 +125,20 @@ export function DotWave({ className = '' }: { className?: string }) {
 
       // ── Layer 3: hotspot glow (top-right) ─────────────────
       const glowGrad = ctx.createRadialGradient(
-        width * 0.78,
-        height * 0.3,
+        width * 0.5,
+        height * 0.4,
         0,
-        width * 0.78,
-        height * 0.3,
+        width * 0.5,
+        height * 0.4,
         width * 0.55,
       );
       glowGrad.addColorStop(
         0,
-        `hsla(${palette.hue}, ${palette.sat}%, 55%, 0.18)`,
+        `hsla(${palette.hue}, ${palette.sat}%, 55%, 0.26)`,
       );
       glowGrad.addColorStop(
         0.35,
-        `hsla(${palette.hue + 15}, ${palette.sat}%, 48%, 0.08)`,
+        `hsla(${palette.hue + 15}, ${palette.sat}%, 48%, 0.12)`,
       );
       glowGrad.addColorStop(1, `hsla(0, 0%, 0%, 0)`);
       ctx.fillStyle = glowGrad;
@@ -157,7 +157,7 @@ export function DotWave({ className = '' }: { className?: string }) {
       );
       accentGrad.addColorStop(
         0,
-        `hsla(${accentHue}, ${palette.sat * 0.7}%, 45%, 0.06)`,
+        `hsla(${accentHue}, ${palette.sat * 0.7}%, 45%, 0.1)`,
       );
       accentGrad.addColorStop(1, `hsla(0, 0%, 0%, 0)`);
       ctx.fillStyle = accentGrad;
@@ -168,8 +168,8 @@ export function DotWave({ className = '' }: { className?: string }) {
       const cols = Math.ceil(width / gap) + 2;
       const rows = Math.ceil(height / gap) + 2;
 
-      const centerX = width * 0.78;
-      const centerY = height * 0.32;
+      const centerX = width * 0.5;
+      const centerY = height * 0.4;
       const maxDist = Math.hypot(width, height);
 
       for (let i = 0; i < cols; i++) {
@@ -210,11 +210,11 @@ export function DotWave({ className = '' }: { className?: string }) {
           const spatialShift = (bias - 0.5) * 26;
 
           const hue = palette.hue + spatialShift;
-          const sat = palette.sat + bandFade * 6;
+          const sat = palette.sat + bandFade * 12;
           const light = 62 + bandFade * 28;
 
           const radius = 0.6 + intensity * 1.5;
-          const alpha = Math.min(0.95, intensity * 0.65);
+          const alpha = Math.min(0.95, intensity * 0.85);
 
           ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${alpha})`;
           ctx.beginPath();
@@ -223,7 +223,7 @@ export function DotWave({ className = '' }: { className?: string }) {
 
           // Rare sparkle — slight hue shift for variety
           if (radial > 0.75 && Math.random() < 0.003) {
-            ctx.fillStyle = `hsla(${hue + 18}, 30%, 88%, ${Math.min(1, alpha + 0.15)})`;
+            ctx.fillStyle = `hsla(${hue + 18}, 90%, 88%, ${Math.min(1, alpha + 0.2)})`;
             ctx.beginPath();
             ctx.arc(baseX, baseY, radius + 1.2, 0, Math.PI * 2);
             ctx.fill();

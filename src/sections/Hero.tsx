@@ -20,7 +20,7 @@ export function Hero() {
       {/* DotWave particle background (30fps, paused off-screen) */}
       <DotWave className="absolute inset-0 -z-20" />
 
-      {/* Readability overlay — darkens top/bottom, clears center for particles */}
+      {/* Readability overlay */}
       <div
         className="pointer-events-none absolute inset-0 -z-[15]"
         aria-hidden="true"
@@ -36,10 +36,10 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8">
+      <div className="relative mx-auto w-full max-w-5xl px-5 text-center sm:px-8">
         {/* Top label */}
         <div
-          className="reveal mb-4 flex items-center gap-4"
+          className="reveal mb-4 flex items-center justify-center gap-4"
           style={{ ['--i' as string]: 0 }}
         >
           <span className="text-[11px] font-medium tracking-[0.3em] text-white/70 uppercase">
@@ -57,13 +57,13 @@ export function Hero() {
 
         {/* Divider */}
         <div
-          className="reveal mt-10 h-px w-full max-w-md bg-gradient-to-r from-white/30 via-white/10 to-transparent"
+          className="reveal mx-auto mt-10 h-px w-full max-w-xs bg-gradient-to-r from-transparent via-white/30 to-transparent"
           style={{ ['--i' as string]: 2 }}
         />
 
         {/* Korean main headline */}
         <h1
-          className="reveal mt-10 max-w-5xl text-[2.75rem] leading-[1.12] font-bold tracking-tight break-keep text-white sm:text-6xl lg:text-[5rem] xl:text-[5.75rem]"
+          className="reveal mx-auto mt-10 max-w-4xl text-[2.75rem] leading-[1.12] font-bold tracking-tight break-keep text-white sm:text-6xl lg:text-[5rem] xl:text-[5.75rem]"
           style={{ ['--i' as string]: 3 }}
         >
           AI에게 물어봤을 때
@@ -73,62 +73,61 @@ export function Hero() {
           답변에 나옵니까?
         </h1>
 
-        {/* Sub copy + CTA grid */}
-        <div className="mt-14 grid grid-cols-1 gap-10 lg:mt-20 lg:grid-cols-12 lg:items-end lg:gap-16">
-          <div
-            className="reveal lg:col-span-7"
-            style={{ ['--i' as string]: 4 }}
-          >
-            <p className="max-w-2xl text-base leading-relaxed text-white/70 break-keep sm:text-lg">
-              생성형 AI가 고객의 첫 번째 검색창이 된 지금,
-              <br className="hidden sm:block" />
-              <span className="font-semibold text-white">
-                노출되지 않으면 존재하지 않는 것
+        {/* Sub copy */}
+        <p
+          className="reveal mx-auto mt-10 max-w-2xl text-base leading-relaxed text-white/70 break-keep sm:text-lg"
+          style={{ ['--i' as string]: 4 }}
+        >
+          생성형 AI가 고객의 첫 번째 검색창이 된 지금,
+          <br className="hidden sm:block" />
+          <span className="font-semibold text-white">
+            노출되지 않으면 존재하지 않는 것
+          </span>
+          과 같습니다.
+        </p>
+
+        {/* CTA buttons */}
+        <div
+          className="reveal mt-10 flex flex-wrap items-center justify-center gap-3"
+          style={{ ['--i' as string]: 5 }}
+        >
+          <CTAButton href="#cta">
+            우리 브랜드 AI 가시성 무료 진단받기
+          </CTAButton>
+          <CTAButton href="#how" variant="outline">
+            작동 원리 보기
+          </CTAButton>
+        </div>
+
+        {/* Platform list */}
+        <div
+          className="reveal mt-8"
+          style={{ ['--i' as string]: 6 }}
+        >
+          <p className="text-[11px] font-medium tracking-[0.22em] text-white/50 uppercase">
+            4개 AI 플랫폼 실측 크롤링 운영
+          </p>
+          <div className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[13px] font-medium text-white/80">
+            {PLATFORMS.map((p, i) => (
+              <span key={p}>
+                {p}
+                {i < PLATFORMS.length - 1 && (
+                  <span className="ml-5 text-white/30">/</span>
+                )}
               </span>
-              과 같습니다.
-            </p>
-          </div>
-
-          <div
-            className="reveal flex flex-col gap-7 lg:col-span-5"
-            style={{ ['--i' as string]: 5 }}
-          >
-            <div className="flex flex-wrap items-center gap-3">
-              <CTAButton href="#cta">
-                우리 브랜드 AI 가시성 무료 진단받기
-              </CTAButton>
-              <CTAButton href="#how" variant="outline">
-                작동 원리 보기
-              </CTAButton>
-            </div>
-
-            <div>
-              <p className="text-[11px] font-medium tracking-[0.22em] text-white/50 uppercase">
-                4개 AI 플랫폼 실측 크롤링 운영
-              </p>
-              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px] font-medium text-white/80">
-                {PLATFORMS.map((p, i) => (
-                  <span key={p}>
-                    {p}
-                    {i < PLATFORMS.length - 1 && (
-                      <span className="ml-5 text-white/30">/</span>
-                    )}
-                  </span>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* Bottom stat strip */}
         <div
-          className="reveal mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md sm:grid-cols-4"
-          style={{ ['--i' as string]: 6 }}
+          className="reveal mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md sm:grid-cols-4"
+          style={{ ['--i' as string]: 7 }}
         >
           {STATS.map((s) => (
             <div
               key={s.label}
-              className="bg-ink-950/40 p-5 backdrop-blur-md transition-colors duration-500 hover:bg-white/[0.04] sm:p-7"
+              className="bg-ink-950/40 p-5 text-center backdrop-blur-md transition-colors duration-500 hover:bg-white/[0.04] sm:p-7"
             >
               <AnimatedCounter
                 value={s.value}
