@@ -92,28 +92,32 @@ export function Process() {
                   <div className="h-6 w-px bg-gradient-to-b from-white/30 to-transparent" />
 
                   {/* Phase card */}
-                  <article className="group flex flex-col w-full h-full rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-6 transition-all duration-500 hover:-translate-y-0.5 hover:border-brand-red/30 hover:bg-white/[0.04]">
-                    {/* Red top accent — grows on hover */}
-                    <div className="mx-auto mb-5 h-px w-0 bg-brand-red/50 transition-all duration-500 group-hover:w-full" />
+                  <article className="group relative overflow-hidden flex flex-col w-full h-full rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-6 transition-all duration-500 hover:-translate-y-0.5 hover:bg-white/[0.04]">
+                    {/* Beam FX */}
+                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(252,0,17,0.3)_85%,rgba(252,0,17,1)_100%)] animate-spin-beam" />
+                    </div>
 
-                    <h3 className="text-2xl font-semibold tracking-tight text-white">
-                      {p.title}
-                    </h3>
-                    <p className="mt-1.5 text-[13px] font-medium tracking-wide text-brand-red">
-                      {p.duration}
-                    </p>
-
-                    <p className="mt-5 text-[14px] leading-relaxed break-keep text-ink-400 flex-1 min-h-[3.25rem]">
-                      {p.body}
-                    </p>
-
-                    <div className="mt-6 mt-auto border-t border-white/10 pt-4">
-                      <p className="text-[10px] font-medium tracking-[0.22em] text-ink-400 uppercase">
-                        Deliverable
+                    <div className="relative z-10 flex flex-col h-full w-full">
+                      <h3 className="text-2xl font-semibold tracking-tight text-white">
+                        {p.title}
+                      </h3>
+                      <p className="mt-1.5 text-[13px] font-medium tracking-wide text-white">
+                        {p.duration}
                       </p>
-                      <p className="mt-1 text-[13px] font-medium text-white break-keep">
-                        {p.deliverable}
+
+                      <p className="mt-5 text-[14px] leading-relaxed break-keep text-ink-400 flex-1 min-h-[3.25rem]">
+                        {p.body}
                       </p>
+
+                      <div className="mt-6 mt-auto border-t border-white/10 pt-4">
+                        <p className="text-[10px] font-medium tracking-[0.22em] text-ink-400 uppercase">
+                          Deliverable
+                        </p>
+                        <p className="mt-1 text-[13px] font-medium text-white break-keep">
+                          {p.deliverable}
+                        </p>
+                      </div>
                     </div>
                   </article>
                 </div>
@@ -149,27 +153,34 @@ export function Process() {
                   </div>
 
                   {/* Phase card */}
-                  <article className="group rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-5 transition-all duration-500 hover:border-brand-red/30">
-                    <div className="flex items-baseline justify-between">
-                      <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
-                        {p.title}
-                      </h3>
-                      <p className="text-[13px] font-medium text-brand-red">
-                        {p.duration}
-                      </p>
+                  <article className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-5 transition-all duration-500 hover:bg-white/[0.04]">
+                    {/* Beam FX */}
+                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(252,0,17,0.3)_85%,rgba(252,0,17,1)_100%)] animate-spin-beam" />
                     </div>
 
-                    <p className="mt-3 text-[14px] leading-relaxed break-keep text-ink-400">
-                      {p.body}
-                    </p>
+                    <div className="relative z-10">
+                      <div className="flex items-baseline justify-between">
+                        <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                          {p.title}
+                        </h3>
+                        <p className="text-[13px] font-medium text-brand-red">
+                          {p.duration}
+                        </p>
+                      </div>
 
-                    <div className="mt-4 border-t border-white/10 pt-3 sm:pt-4">
-                      <p className="text-[10px] font-medium tracking-[0.22em] text-ink-400 uppercase">
-                        Deliverable
+                      <p className="mt-3 text-[14px] leading-relaxed break-keep text-ink-400">
+                        {p.body}
                       </p>
-                      <p className="mt-1 text-[13px] font-medium text-white break-keep">
-                        {p.deliverable}
-                      </p>
+
+                      <div className="mt-4 border-t border-white/10 pt-3 sm:pt-4">
+                        <p className="text-[10px] font-medium tracking-[0.22em] text-ink-400 uppercase">
+                          Deliverable
+                        </p>
+                        <p className="mt-1 text-[13px] font-medium text-white break-keep">
+                          {p.deliverable}
+                        </p>
+                      </div>
                     </div>
                   </article>
                 </div>

@@ -12,6 +12,7 @@ import { Process } from './sections/Process';
 import { CTA } from './sections/CTA';
 import { Footer } from './sections/Footer';
 import { FloatingOrbs } from './components/FloatingOrbs';
+import { ScrollToTop } from './components/ui/ScrollToTop';
 
 export default function App() {
   useReveal();
@@ -34,6 +35,7 @@ export default function App() {
         <CTA />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

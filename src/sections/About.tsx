@@ -79,10 +79,16 @@ export function About() {
               {METRICS.map((m, i) => (
                 <div
                   key={m.v}
-                  className="reveal group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-1.5 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.04] sm:rounded-3xl"
+                  className="reveal"
                   style={{ ['--i' as string]: i + 4 }}
                 >
-                  <div className="flex items-baseline justify-between gap-4 rounded-[18px] bg-gradient-to-b from-white/[0.035] to-transparent p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:gap-6 sm:rounded-[22px] sm:p-6 lg:p-8">
+                  <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-1.5 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04] hover:shadow-[0_15px_40px_-10px_rgba(255,255,255,0.05)] sm:rounded-3xl">
+                    {/* Beam FX */}
+                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(252,0,17,0.3)_85%,rgba(252,0,17,1)_100%)] animate-spin-beam" />
+                    </div>
+
+                    <div className="relative z-10 flex items-baseline justify-between gap-4 rounded-[18px] bg-gradient-to-b from-white/[0.035] to-transparent p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:gap-6 sm:rounded-[22px] sm:p-6 lg:p-8">
                     <div className="flex items-baseline gap-1.5">
                       <span className="font-display text-5xl font-medium tracking-tight text-white tabular sm:text-6xl lg:text-7xl">
                         {m.k}
@@ -94,6 +100,7 @@ export function About() {
                     <p className="max-w-[10rem] text-right text-[12px] font-medium tracking-wide text-ink-300 break-keep sm:text-[13px] lg:text-sm">
                       {m.v}
                     </p>
+                  </div>
                   </div>
                 </div>
               ))}

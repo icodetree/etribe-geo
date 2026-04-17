@@ -314,4 +314,22 @@
     background-size: 100% 100%;
     padding: 0 0.15em;
   }
+
+  /* ── Border Beam FX ── */
+  .mask-border-beam {
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1.5px;
+  }
+
+  .animate-spin-beam {
+    animation: spinBeam 6s linear infinite;
+  }
 }
+
+@keyframes spinBeam {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+

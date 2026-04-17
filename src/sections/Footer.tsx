@@ -76,9 +76,6 @@ export function Footer() {
             © 2026 ETRIBE AX Force. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-[11px] font-medium tracking-[0.18em] text-ink-400 uppercase">
-            <a href="#top" className="transition-colors hover:text-white">
-              Back to top ↑
-            </a>
             <span>Curated with AX Force</span>
           </div>
         </div>

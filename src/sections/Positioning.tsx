@@ -108,11 +108,7 @@ const ROWS: Array<{
 function CellRender({ v, accent }: { v: Cell; accent?: boolean }) {
   if (v === true) {
     return (
-      <span
-        className={`text-base font-semibold ${
-          accent ? 'text-brand-red' : 'text-white'
-        }`}
-      >
+      <span className="text-base font-semibold text-white">
         있음
       </span>
     );
@@ -185,16 +181,12 @@ export function Positioning() {
                 {COLS.map((c) => (
                   <th
                     key={c.key}
-                    className={`w-[23%] px-6 py-5 text-left ${
-                      c.accent ? 'bg-brand-red/[0.06]' : ''
+                    className={`relative w-[23%] px-6 py-5 text-left ${
+                      c.accent ? 'bg-[#060606]' : ''
                     }`}
                   >
                     <div className="flex flex-col items-start gap-1">
-                      <span
-                        className={`text-base font-semibold ${
-                          c.accent ? 'text-brand-red' : 'text-white'
-                        }`}
-                      >
+                      <span className="text-base font-semibold text-white">
                         {c.label}
                       </span>
                       <span className="text-[11px] tracking-wide text-ink-400">
@@ -224,8 +216,8 @@ export function Positioning() {
                   {COLS.map((c) => (
                     <td
                       key={c.key}
-                      className={`px-6 py-5 ${
-                        c.accent ? 'bg-brand-red/[0.03]' : ''
+                      className={`px-6 py-5 transition-colors duration-300 ${
+                        c.accent ? 'bg-[#060606] group-hover:bg-[#0a0a0a]' : ''
                       }`}
                     >
                       <CellRender v={r.values[c.key]} accent={c.accent} />
@@ -236,10 +228,10 @@ export function Positioning() {
             </tbody>
           </table>
 
-          {/* CTA bar with red accent glow */}
-          <div className="relative border-t border-brand-red/20 bg-brand-red/[0.05] px-8 py-6">
+          {/* CTA bar with white accent glow */}
+          <div className="relative border-t border-white/10 bg-[#060606] px-8 py-6">
             <div
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-red/60 to-transparent"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"
               aria-hidden="true"
             />
             <p className="text-sm leading-relaxed break-keep text-ink-400 sm:text-base lg:text-lg">
@@ -258,23 +250,14 @@ export function Positioning() {
               key={c.key}
               className={`reveal relative overflow-hidden rounded-2xl border p-5 sm:rounded-3xl sm:p-6 ${
                 c.accent
-                  ? 'border-brand-red/30 bg-brand-red/[0.05]'
+                  ? 'border-white/20 bg-[#060606]'
                   : 'border-white/10 bg-white/[0.02]'
               }`}
               style={{ ['--i' as string]: i + 3 }}
             >
-              {/* Red top accent line — draws on reveal (eTribe card only) */}
-              {c.accent && (
-                <div className="line-h mb-4 h-[2px] w-full bg-gradient-to-r from-brand-red to-brand-red/20" />
-              )}
-
               <div className="flex items-baseline justify-between">
                 <div>
-                  <h3
-                    className={`text-lg font-semibold tracking-tight sm:text-xl ${
-                      c.accent ? 'text-brand-red' : 'text-white'
-                    }`}
-                  >
+                  <h3 className="text-lg font-semibold tracking-tight text-white sm:text-xl">
                     {c.label}
                   </h3>
                   <p className="mt-1 text-[12px] tracking-wide text-ink-400">
@@ -282,7 +265,7 @@ export function Positioning() {
                   </p>
                 </div>
                 {c.accent && (
-                  <span className="text-[11px] font-medium tracking-[0.2em] text-brand-red uppercase">
+                  <span className="text-[11px] font-medium tracking-[0.2em] text-white/50 uppercase">
                     권장
                   </span>
                 )}

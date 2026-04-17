@@ -53,7 +53,7 @@ export function Definition() {
         </div>
 
         {/* Alternating Open Layout Rows */}
-        <div className="flex flex-col gap-32 lg:gap-40">
+        <div className="flex flex-col gap-10 lg:gap-20">
           {CONCEPTS.map((c, i) => {
             const isEven = i % 2 === 1;
             return (
