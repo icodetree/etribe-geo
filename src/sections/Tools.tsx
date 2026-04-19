@@ -110,7 +110,7 @@ export function Tools() {
                   </g>
                   
                   {/* Animated White Beams */}
-                  <g stroke="url(#beam-white-mars)" strokeWidth="1.5" strokeLinecap="round">
+                  <g stroke="url(#beam-white-mars)" strokeWidth="1" strokeLinecap="round">
                     <path d="M120,170 L200,170 L200,100 L280,100" />
                     <path d="M120,170 L200,170 L200,240 L280,240" />
                     <path d="M280,100 L360,100 L360,170 L440,170" />
@@ -191,7 +191,7 @@ export function Tools() {
                       <path 
                         d="M0 65H10C30 65 40 85 62 85C85 85 95 52 115 52C140 52 145 80 167.5 80C190 80 195 34 218 34C240 34 245 69 270 69C300 69 315 5 335 5" 
                         stroke="url(#beam-red-v3)" 
-                        strokeWidth="1.5" 
+                        strokeWidth="1" 
                         strokeLinecap="round"
                       />
                       <defs>

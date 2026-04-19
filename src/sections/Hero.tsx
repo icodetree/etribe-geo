@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import { CTAButton } from '../components/ui/Button';
 // import { AnimatedCounter } from '../components/ui/AnimatedCounter';
 import { DotWave } from '../components/DotWave';
@@ -143,90 +144,82 @@ export function Hero() {
         </div>
         */}
 
-        {/* ─── Service Preview — MacBook Frame ─── */}
+        {/* ─── Service Preview — Premium 1px Chrome Rim High-Intensity Display ─── */}
         <div
           className="reveal mt-10 sm:mt-14"
           style={{ ['--i' as string]: 8 }}
         >
-          <div className="relative mx-auto max-w-5xl">
+          <div className="relative mx-auto max-w-5xl px-4 sm:px-0">
+            {/* Ambient Ground Glow — Matching screenshot's warm/reddish lighting */}
+            <div className="absolute -bottom-16 inset-x-0 mx-auto w-[90%] h-32 bg-brand-red/10 blur-[100px] rounded-full pointer-events-none opacity-10" aria-hidden="true" />
+            
             {/* Bottom fade — blends into page background */}
             <div
-              className="pointer-events-none absolute inset-0 z-20 rounded-[inherit]"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-20 rounded-[inherit]"
               aria-hidden="true"
               style={{
                 background:
-                  'linear-gradient(to top, var(--color-ink-950) 8%, rgba(10,10,10,0.5) 25%, transparent 55%)',
+                  'linear-gradient(to top, var(--color-ink-950) 5%, transparent 95%)',
               }}
             />
 
-            {/* MacBook outer shell */}
+            {/* High-Contrast 1px Chrome Shell */}
             <div
-              className="relative overflow-hidden rounded-xl sm:rounded-2xl"
+              className="relative overflow-hidden rounded-xl p-[1px] sm:rounded-2xl"
               style={{
-                background:
-                  'linear-gradient(180deg, #2a2a2e 0%, #1c1c1f 40%, #161618 100%)',
-                boxShadow:
-                  'inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.4), 0 25px 80px -15px rgba(0,0,0,0.7)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 5%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.1) 100%)',
+                
               }}
             >
-              {/* Border beam — soft white, short tail, hidden at bottom */}
               <div
-                className="absolute inset-0 z-30 pointer-events-none rounded-[inherit]"
+                className="relative overflow-hidden rounded-[inherit] bg-black"
                 style={{
-                  WebkitMaskImage:
-                    'linear-gradient(to bottom, black 45%, transparent 80%)',
-                  maskImage:
-                    'linear-gradient(to bottom, black 45%, transparent 80%)',
+                  padding: '3px', // Ultra-thin bezel
                 }}
               >
-                <div className="mask-border-beam absolute inset-0 rounded-[inherit]">
+                {/* ─── High-Intensity Rim Light Animation (Matching Sample) ─── */}
+                <div className="absolute top-0 left-0 right-0 h-[1.5px] z-30 pointer-events-none overflow-hidden">
+                   {/* Stationary Top Rim Highlight */}
+                   <div className="absolute inset-0 bg-white/10" />
+                   {/* Animated Traveling Beam (Localized) */}
+                   <motion.div 
+                     className="absolute top-0 h-full w-[120px] bg-gradient-to-r from-transparent via-white to-transparent opacity-80"
+                     animate={{ x: [-120, 1000] }}
+                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                     style={{ filter: 'blur(1px)' }}
+                   />
+                </div>
+
+                {/* Left/Right Bezel Accents */}
+                <div className="absolute inset-y-0 left-0 w-px bg-white/5 z-30" />
+                <div className="absolute inset-y-0 right-0 w-px bg-white/5 z-30" />
+
+                {/* Screen area with deep inner shadow and glass polish */}
+                <div className="relative overflow-hidden rounded-[calc(var(--radius-xl)-3px)] sm:rounded-[calc(var(--radius-2xl)-3px)] bg-[#020202]">
+                  {/* Inner bezel highlight & shadow edge */}
                   <div
-                    className="absolute top-1/2 left-1/2 w-[250%] aspect-square"
+                    className="pointer-events-none absolute inset-0 z-10 rounded-[inherit]"
+                    aria-hidden="true"
                     style={{
-                      background:
-                        'conic-gradient(from 0deg, transparent 82%, rgba(255,255,255,0.06) 88%, rgba(255,255,255,0.2) 94%, rgba(255,255,255,0.45) 100%)',
-                      animation: 'spinBeam 12s linear infinite',
+                      boxShadow: 'inset 0 4px 16px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(255,255,255,0.04)',
                     }}
+                  />
+
+                  {/* Glass texture and reflection */}
+                  <div className="absolute inset-0 z-20 pointer-events-none opacity-20 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
+                  <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+
+                  {/* Video */}
+                  <video
+                    className="relative block w-full aspect-video object-fill"
+                    src="/main_01.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                   />
                 </div>
               </div>
-
-              {/* Top bezel — camera notch */}
-              <div className="relative flex items-center justify-center py-2 sm:py-2.5">
-                <div className="h-[5px] w-[5px] rounded-full bg-white/[0.06] ring-1 ring-white/[0.04] sm:h-1.5 sm:w-1.5" />
-              </div>
-
-              {/* Screen area with inner shadow */}
-              <div className="relative mx-1.5 mb-1.5 overflow-hidden rounded-lg sm:mx-2 sm:mb-2 sm:rounded-xl">
-                {/* Inner bezel highlight */}
-                <div
-                  className="pointer-events-none absolute inset-0 z-10 rounded-[inherit]"
-                  aria-hidden="true"
-                  style={{
-                    boxShadow:
-                      'inset 0 1px 2px rgba(0,0,0,0.5), inset 0 0 0 0.5px rgba(255,255,255,0.05)',
-                  }}
-                />
-
-                {/* Video */}
-                <video
-                  className="relative block w-full aspect-video bg-black object-cover"
-                  src="/main_01.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-              </div>
-
-              {/* Bottom chin — metallic gradient */}
-              <div
-                className="relative flex items-center justify-center py-2.5 sm:py-3"
-                style={{
-                  background:
-                    'linear-gradient(180deg, #1a1a1d 0%, #141416 100%)',
-                }}
-              />
             </div>
           </div>
         </div>
