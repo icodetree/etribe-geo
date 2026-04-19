@@ -1,9 +1,11 @@
+import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useTransform, animate, useInView } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 
 const METRICS = [
-  { k: '18', u: '년', v: '디지털 SI 에이전시 경력' },
-  { k: '25', u: '일', v: '실측 모니터링 운영' },
-  { k: '900', u: '건', v: '수집 응답 데이터' },
+  { k: 18, u: '년', v: '디지털 SI 에이전시 경력' },
+  { k: 25, u: '일', v: '실측 모니터링 운영' },
+  { k: 900, u: '건', v: '수집 응답 데이터' },
 ];
 
 const TAGS = [
@@ -12,6 +14,22 @@ const TAGS = [
   'Entity Engineering',
   'MARS Pipeline',
 ];
+
+function Counter({ value }: { value: number }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.floor(latest));
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(count, value, { duration: 2, ease: "easeOut", delay: 0.2 });
+      return controls.stop;
+    }
+  }, [isInView, count, value]);
+
+  return <motion.span ref={ref}>{rounded}</motion.span>;
+}
 
 export function About() {
   return (
@@ -83,15 +101,15 @@ export function About() {
                   style={{ ['--i' as string]: i + 4 }}
                 >
                   <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-1.5 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04] hover:shadow-[0_15px_40px_-10px_rgba(255,255,255,0.05)] sm:rounded-3xl">
-                    {/* Beam FX */}
-                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(252,0,17,0.3)_85%,rgba(252,0,17,1)_100%)] animate-spin-beam" />
+                    {/* Beam FX - Changed to White & 50% Opacity */}
+                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-50">
+                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(255,255,255,0.2)_85%,rgba(255,255,255,1)_100%)] animate-spin-beam" />
                     </div>
 
                     <div className="relative z-10 flex items-baseline justify-between gap-4 rounded-[18px] bg-gradient-to-b from-white/[0.035] to-transparent p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:gap-6 sm:rounded-[22px] sm:p-6 lg:p-8">
                     <div className="flex items-baseline gap-1.5">
                       <span className="font-display text-5xl font-medium tracking-tight text-white tabular sm:text-6xl lg:text-7xl">
-                        {m.k}
+                        <Counter value={m.k} />
                       </span>
                       <span className="font-display text-lg text-brand-500 sm:text-xl">
                         {m.u}
@@ -111,3 +129,4 @@ export function About() {
     </section>
   );
 }
+

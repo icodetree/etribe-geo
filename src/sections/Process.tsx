@@ -93,9 +93,9 @@ export function Process() {
 
                   {/* Phase card */}
                   <article className="group relative overflow-hidden flex flex-col w-full h-full rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-6 transition-all duration-500 hover:-translate-y-0.5 hover:bg-white/[0.04]">
-                    {/* Beam FX */}
-                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(252,0,17,0.3)_85%,rgba(252,0,17,1)_100%)] animate-spin-beam" />
+                    {/* Beam FX - White & 50% Opacity */}
+                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-50">
+                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(255,255,255,0.2)_85%,rgba(255,255,255,1)_100%)] animate-spin-beam" />
                     </div>
 
                     <div className="relative z-10 flex flex-col h-full w-full">
@@ -154,9 +154,9 @@ export function Process() {
 
                   {/* Phase card */}
                   <article className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-5 transition-all duration-500 hover:bg-white/[0.04]">
-                    {/* Beam FX */}
-                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(252,0,17,0.3)_85%,rgba(252,0,17,1)_100%)] animate-spin-beam" />
+                    {/* Beam FX - White & 50% Opacity */}
+                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-50">
+                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(255,255,255,0.2)_85%,rgba(255,255,255,1)_100%)] animate-spin-beam" />
                     </div>
 
                     <div className="relative z-10">
