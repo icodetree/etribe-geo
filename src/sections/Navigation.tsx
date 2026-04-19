@@ -31,7 +31,7 @@ export function Navigation() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          scrolled ? 'pt-3' : 'pt-8'
+          scrolled ? 'pt-5' : 'pt-10'
         }`}
       >
        <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-5 sm:px-8">
