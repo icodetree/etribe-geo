@@ -15,20 +15,29 @@ const TAGS = [
   'MARS Pipeline',
 ];
 
-function Counter({ value }: { value: number }) {
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.floor(latest));
+function Counter({ value, suffixContent }: { value: number; suffixContent?: React.ReactNode }) {
+  const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
     if (isInView) {
-      const controls = animate(count, value, { duration: 2, ease: "easeOut", delay: 0.2 });
+      const controls = animate(0, value, { 
+        duration: 1.5, 
+        ease: "easeOut", 
+        delay: 0.3,
+        onUpdate: (latest) => setDisplayValue(Math.floor(latest))
+      });
       return controls.stop;
     }
-  }, [isInView, count, value]);
+  }, [isInView, value]);
 
-  return <motion.span ref={ref}>{rounded}</motion.span>;
+  return (
+    <span ref={ref}>
+      {displayValue}
+      {suffixContent}
+    </span>
+  );
 }
 
 export function About() {

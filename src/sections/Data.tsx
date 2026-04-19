@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView, animate } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { ScrollDivider } from '../components/ui/ScrollDivider';
 
@@ -8,9 +10,37 @@ const ROWS = [
   { query: '브랜드 직접 검색', rate: 30, tone: 'neutral' as const },
 ];
 
-export function Data() {
+function Counter({ value, suffixContent }: { value: number; suffixContent?: React.ReactNode }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, value, { 
+        duration: 1.5, 
+        ease: "easeOut", 
+        delay: 0.3,
+        onUpdate: (latest) => setDisplayValue(Math.floor(latest))
+      });
+      return controls.stop;
+    }
+  }, [isInView, value]);
+
   return (
-    <section id="data" className="relative py-28 sm:py-32 lg:py-40">
+    <span ref={ref}>
+      {displayValue}
+      {suffixContent}
+    </span>
+  );
+}
+
+export function Data() {
+  const sectionRef = useRef(null);
+  const isSectionInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  return (
+    <section id="data" ref={sectionRef} className="relative py-28 sm:py-32 lg:py-40">
       <ScrollDivider />
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="grid grid-cols-1 items-end gap-12 lg:grid-cols-12 lg:gap-16">
@@ -41,13 +71,13 @@ export function Data() {
           >
             <div className="grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 text-center">
               {[
-                { k: '4', v: 'Platforms' },
-                { k: '9', v: 'Queries' },
-                { k: '25', v: 'Days' },
+                { k: 4, v: 'Platforms' },
+                { k: 9, v: 'Queries' },
+                { k: 25, v: 'Days' },
               ].map((x) => (
                 <div key={x.v} className="bg-ink-950 px-4 py-5">
                   <div className="font-display text-4xl tracking-tight text-white tabular sm:text-5xl">
-                    {x.k}
+                    <Counter value={x.k} />
                   </div>
                   <div className="mt-1.5 text-[11px] font-medium tracking-[0.22em] text-ink-400 uppercase">
                     {x.v}
@@ -87,13 +117,20 @@ export function Data() {
 
                 <div className="col-span-12 sm:col-span-6">
                   <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-white/[0.04]">
-                    <div
-                      className={`absolute inset-y-0 left-0 rounded-full transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    <motion.div
+                      className={`absolute inset-y-0 left-0 rounded-full ${
                         r.tone === 'alarm'
                           ? 'bg-gradient-to-r from-brand-500 to-brand-600'
                           : 'bg-white/80'
                       }`}
-                      style={{ width: `${Math.max(r.rate, 1.5)}%` }}
+                      initial={{ width: 0 }}
+                      animate={isSectionInView ? { width: ["0%", "100%", `${Math.max(r.rate, 1.5)}%`] } : {}}
+                      transition={{ 
+                        duration: 1.8, 
+                        times: [0, 0.4, 1], 
+                        ease: "easeInOut",
+                        delay: i * 0.1 + 0.5 
+                      }}
                     />
                   </div>
                 </div>
@@ -104,7 +141,7 @@ export function Data() {
                       r.tone === 'alarm' ? 'text-brand-500' : 'text-white'
                     }`}
                   >
-                    {r.rate}%
+                    <Counter value={r.rate} suffixContent="%" />
                   </span>
                 </div>
               </div>
@@ -127,3 +164,4 @@ export function Data() {
     </section>
   );
 }
+
