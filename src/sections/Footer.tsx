@@ -16,7 +16,7 @@ export function Footer() {
           <div className="md:col-span-5">
             <div className="flex items-center gap-3.5">
               <img
-                src="/logo.png"
+                src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="eTribe"
                 className="h-6 w-auto object-contain select-none"
                 draggable={false}

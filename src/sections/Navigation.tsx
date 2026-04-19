@@ -41,7 +41,7 @@ export function Navigation() {
             aria-label="eTribe GEO 홈"
           >
             <img
-              src="/logo.png"
+              src={`${import.meta.env.BASE_URL}logo.png`}
               alt="eTribe"
               className={`w-auto object-contain select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 scrolled ? 'h-[18px]' : 'h-[24px]'
