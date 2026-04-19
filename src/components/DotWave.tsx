@@ -328,10 +328,6 @@ export function DotWave({ className = '' }: { className?: string }) {
              ctx.stroke();
           }
           
-          ctx.fillStyle = `hsla(${palette.hue + 25}, 100%, 95%, ${Math.min(1, alpha + 0.2)})`;
-          ctx.beginPath();
-          ctx.arc(headX, y, 1.5, 0, Math.PI * 2);
-          ctx.fill();
         }
         ctx.globalCompositeOperation = 'source-over';
       }

@@ -326,10 +326,52 @@
   .animate-spin-beam {
     animation: spinBeam 6s linear infinite;
   }
+
+  /* ── Hero Screen Border Beam (offset-path approach) ── */
+
+  .hero-screen-beam {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    -webkit-mask-clip: padding-box, border-box;
+    mask-clip: padding-box, border-box;
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    -webkit-mask-image: linear-gradient(transparent, transparent), linear-gradient(#000, #000);
+    mask-image: linear-gradient(transparent, transparent), linear-gradient(#000, #000);
+    border: 1.5px solid transparent;
+    overflow: hidden;
+  }
+
+  .hero-beam-dot {
+    position: absolute;
+    width: 200px;
+    aspect-ratio: 1;
+    background: linear-gradient(
+      to left,
+      var(--color-brand-red),
+      rgba(252, 0, 17, 0.4),
+      transparent
+    );
+    border-radius: 50%;
+    offset-path: rect(0px auto auto 0px round 20px);
+    animation: beamTravel 8s linear infinite;
+  }
 }
 
 @keyframes spinBeam {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes beamTravel {
+  0%   { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+
+@keyframes graphBeam {
+  0%   { stroke-dashoffset: 520; }
+  100% { stroke-dashoffset: -520; }
 }
 

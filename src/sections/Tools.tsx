@@ -132,28 +132,124 @@ export function Tools() {
             className="reveal relative flex flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[#0e0e0e] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
             style={{ ['--i' as string]: 3 }}
           >
-            <div className="relative flex-1 w-full flex flex-col items-center justify-center min-h-[220px]">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03),transparent_70%)] pointer-events-none" />
-              
-              {/* Graphic: Glowing Line Chart */}
-              <div className="relative w-full h-full flex items-center justify-center mt-6">
-                <svg className="absolute w-[80%] h-[120px] top-[120px]" viewBox="0 0 200 120" fill="none" preserveAspectRatio="none">
-                  {/* Background grid line */}
-                  <line x1="100" y1="0" x2="100" y2="120" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
-                  {/* Faded line */}
-                  <path d="M0,80 Q50,20 100,50 T200,30" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-                  {/* Highlight line */}
-                  <path d="M0,80 Q50,20 100,50" stroke="#fc0011" strokeWidth="2" />
-                  <circle cx="100" cy="50" r="4" fill="#fc0011" stroke="#0e0e0e" strokeWidth="2" />
-                </svg>
+            {/* ── Graph Visualization ── */}
+            <div className="relative flex-1 w-full min-h-[280px] flex items-center justify-center overflow-hidden">
+              {/* Radial fade mask */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'rgba(40,40,40,0.25)',
+                  WebkitMaskImage:
+                    'radial-gradient(55% 50% at 50% 46%, white 0%, transparent 100%)',
+                  maskImage:
+                    'radial-gradient(55% 50% at 50% 46%, white 0%, transparent 100%)',
+                }}
+              >
+                <div className="relative h-full w-full overflow-hidden">
+                  {/* Vertical dashed center line — full card height */}
+                  <svg className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
+                    <line x1="50%" y1="0" x2="50%" y2="100%" stroke="rgba(255,255,255,0.07)" strokeDasharray="4 4" />
+                  </svg>
 
-                {/* Tooltip & Arrow */}
-                <div className="absolute top-[20px] rounded-full border border-white/10 bg-[#1f1f1f] px-3 py-1.5 text-[11px] font-medium text-white shadow-lg">
-                  Insight Updated
+                  {/* Padded graph area — 30px inset from card edges */}
+                  <div className="absolute inset-[30px]">
+                    <svg
+                      className="absolute inset-0 w-full h-full"
+                      viewBox="0 0 400 100"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      <defs>
+                        <filter id="geo-glow" x="-10%" y="-20%" width="120%" height="140%">
+                          <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+                        </filter>
+                        <linearGradient id="geo-area" x1="200" y1="20" x2="200" y2="100" gradientUnits="userSpaceOnUse">
+                          <stop stopColor="white" stopOpacity="0.10" />
+                          <stop offset="0.6" stopColor="white" stopOpacity="0.04" />
+                          <stop offset="1" stopColor="white" stopOpacity="0" />
+                        </linearGradient>
+                        {/* Beam gradient — comet: bright head (offset 0) → fade tail (offset 1) */}
+                        <linearGradient id="beam-grad" gradientUnits="userSpaceOnUse" y1="0" y2="0">
+                          <stop offset="0" stopColor="white" stopOpacity="0.65" />
+                          <stop offset="0.15" stopColor="white" stopOpacity="0.3" />
+                          <stop offset="0.4" stopColor="white" stopOpacity="0.05" />
+                          <stop offset="1" stopColor="white" stopOpacity="0" />
+                          <animate attributeName="x1" values="-50;450" dur="9s" repeatCount="indefinite" />
+                          <animate attributeName="x2" values="0;500" dur="9s" repeatCount="indefinite" />
+                        </linearGradient>
+                      </defs>
+
+                      {/* Area fill */}
+                      <path
+                        d="M-20 52 C20 52, 50 32, 90 32 C130 32, 165 52, 200 52 C235 52, 270 18, 310 18 C332 18, 348 38, 362 38 C376 38, 395 -5, 430 -40 L430 100 L-20 100 Z"
+                        fill="url(#geo-area)"
+                      />
+
+                      {/* Ghost glow */}
+                      <path
+                        d="M-20 52 C20 52, 50 32, 90 32 C130 32, 165 52, 200 52 C235 52, 270 18, 310 18 C332 18, 348 38, 362 38 C376 38, 395 -5, 430 -40"
+                        stroke="rgba(255,255,255,0.06)"
+                        strokeWidth="2"
+                        fill="none"
+                        filter="url(#geo-glow)"
+                      />
+
+                      {/* Main line */}
+                      <path
+                        d="M-20 52 C20 52, 50 32, 90 32 C130 32, 165 52, 200 52 C235 52, 270 18, 310 18 C332 18, 348 38, 362 38 C376 38, 395 -5, 430 -40"
+                        stroke="rgba(255,255,255,0.16)"
+                        strokeWidth="1"
+                        fill="none"
+                      />
+
+                      {/* Beam — gradient tail, thin */}
+                      <path
+                        d="M-20 52 C20 52, 50 32, 90 32 C130 32, 165 52, 200 52 C235 52, 270 18, 310 18 C332 18, 348 38, 362 38 C376 38, 395 -5, 430 -40"
+                        stroke="url(#beam-grad)"
+                        strokeWidth="1"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
+                    </svg>
+
+                    {/* Circle marker — dead center of padded area */}
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                      <div className="flex h-[22px] w-[22px] items-center justify-center rounded-full border border-white/15 bg-[#121212]/80 shadow-[0_0_16px_rgba(255,255,255,0.06),0_16px_12px_-8px_rgba(0,0,0,0.4)] backdrop-blur-sm">
+                        <div className="h-[7px] w-[7px] rounded-full bg-white" />
+                      </div>
+                    </div>
+
+                    {/* Cursor — brand red */}
+                    <svg
+                      className="absolute left-[calc(50%+10px)] top-[calc(50%+4px)] z-10 h-[15px] w-[15px]"
+                      viewBox="0 0 19 19"
+                      fill="none"
+                    >
+                      <path
+                        d="M3.08 1.18C2.9 1.12 2.71 1.05 2.54 1.01C2.39 0.97 2.1 0.9 1.78 1.01C1.42 1.13 1.13 1.42 1.01 1.78C0.9 2.1 0.97 2.39 1.01 2.54C1.05 2.71 1.12 2.9 1.18 3.08L5.96 16.38C6.04 16.62 6.12 16.84 6.2 17.01C6.27 17.16 6.42 17.48 6.75 17.66C7.11 17.86 7.55 17.86 7.92 17.67C8.25 17.5 8.41 17.19 8.48 17.04C8.57 16.87 8.65 16.65 8.74 16.42L10.89 10.89L16.42 8.74C16.65 8.66 16.87 8.57 17.04 8.48C17.19 8.41 17.5 8.25 17.67 7.92C17.86 7.55 17.86 7.11 17.66 6.75C17.48 6.42 17.16 6.27 17.01 6.2C16.84 6.12 16.62 6.04 16.38 5.96L3.08 1.18Z"
+                        fill="#fc0011"
+                        stroke="#ff3333"
+                        strokeWidth="1"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
-                <svg className="absolute top-[85px] left-[52%] w-4 h-4 text-brand-red" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M22 2L2 9.5l9 3 3 9L22 2z" />
-                </svg>
+              </div>
+
+              {/* Floating tooltip — above the valley center */}
+              <div
+                className="absolute left-1/2 top-[18%] -translate-x-1/2 z-10 rounded-full px-4 py-2 text-[11px] font-medium text-white/80"
+                style={{
+                  background: 'rgba(18,18,18,0.7)',
+                  boxShadow:
+                    'inset 0 0 8px rgba(248,248,248,0.15), inset 0 32px 24px -16px rgba(0,0,0,0.4)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+              >
+                +115% 가시성 향상
               </div>
             </div>
 
