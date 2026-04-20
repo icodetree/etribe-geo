@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useTransform, animate, useInView } from 'motion/react';
+import { animate, useInView } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 
 const METRICS = [
@@ -17,14 +17,14 @@ const TAGS = [
 
 function Counter({ value, suffixContent }: { value: number; suffixContent?: React.ReactNode }) {
   const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   useEffect(() => {
     if (isInView) {
-      const controls = animate(0, value, { 
-        duration: 1.5, 
-        ease: "easeOut", 
+      const controls = animate(0, value, {
+        duration: 1.5,
+        ease: "easeOut",
         delay: 0.3,
         onUpdate: (latest) => setDisplayValue(Math.floor(latest))
       });
@@ -33,10 +33,12 @@ function Counter({ value, suffixContent }: { value: number; suffixContent?: Reac
   }, [isInView, value]);
 
   return (
-    <span ref={ref}>
-      {displayValue}
-      {suffixContent}
-    </span>
+    <div ref={ref} className="inline">
+      <span>
+        {displayValue}
+        {suffixContent}
+      </span>
+    </div>
   );
 }
 

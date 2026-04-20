@@ -2,54 +2,6 @@ import { motion } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { ScrollDivider } from '../components/ui/ScrollDivider';
 
-type Tool = {
-  title: string;
-  eng: string;
-  lead: string;
-  body: string;
-  span: string;
-  accent?: boolean;
-};
-
-const TOOLS: Tool[] = [
-  {
-    title: 'MARS',
-    eng: 'Multi Agent Recipe System',
-    lead: 'GEO 운영을 자동화한 멀티에이전트 파이프라인',
-    body: '크롤링 → AI 가시성 분석 → SOV 분석 → 기술진단 → 레포트. 사람이 하던 14일을 48시간으로 압축합니다.',
-    span: 'md:col-span-6 lg:col-span-4 lg:row-span-2',
-    accent: true,
-  },
-  {
-    title: 'GEO 대시보드',
-    eng: 'Monitoring Console',
-    lead: 'AI 가시성 점수 · 플랫폼별 인용률 · 경쟁사 SOV',
-    body: '부서별 현황까지 한 화면. 숫자로 보고, 숫자로 움직입니다.',
-    span: 'md:col-span-6 lg:col-span-2',
-  },
-  {
-    title: '엔티티 회침기',
-    eng: 'Entity Probe',
-    lead: 'LLM에게 직접 묻는 지식공백 진단기',
-    body: 'AI가 우리 브랜드에 대해 무엇을 알고, 무엇을 모르는지. 공백을 드러내야 채울 수 있습니다.',
-    span: 'md:col-span-6 lg:col-span-3',
-  },
-  {
-    title: '인텐트 나침반',
-    eng: 'Intent Compass',
-    lead: '인텐트별 인용률 히트맵',
-    body: '어느 인텐트가 강하고 어디가 공백인지 한눈에. 우선순위는 지도가 결정합니다.',
-    span: 'md:col-span-6 lg:col-span-3',
-  },
-  {
-    title: 'GEO 콘텐츠 생성기',
-    eng: 'Content Forge',
-    lead: '인텐트 선택 → 포맷 자동 분기 → GEO 최적화 콘텐츠 생성',
-    body: '정보탐색=설명서 · 추천=FAQ · 비교=비교표 · 가격=데이터테이블. 인텐트가 포맷을 정합니다.',
-    span: 'md:col-span-6 lg:col-span-6',
-  },
-];
-
 export function Tools() {
   return (
     <section id="tools" className="relative py-28 sm:py-32 lg:py-40 bg-ink-950">

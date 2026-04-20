@@ -33,13 +33,10 @@ export function FloatingOrbs() {
       }}
     >
       {/* Primary 3D Orb - Dark Frosted Red Glass */}
+      {/* Mobile: smaller, top-left corner half off-screen */}
       <div
         className="orb-drift-1 absolute backdrop-blur-xl"
         style={{
-          width: 440,
-          height: 440,
-          left: '4%',
-          top: '20%',
           borderRadius: '50%',
           background:
             'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.07) 0%, rgba(252,0,17,0.05) 30%, rgba(0,0,0,0.4) 80%, rgba(0,0,0,0.9) 100%)',
@@ -48,16 +45,22 @@ export function FloatingOrbs() {
           opacity: 0.8,
           willChange: 'transform',
         }}
-      />
+      >
+        <style>{`
+          .orb-drift-1 {
+            width: 260px; height: 260px; left: -20%; top: 12%;
+          }
+          @media (min-width: 1024px) {
+            .orb-drift-1 { width: 440px; height: 440px; left: 4%; top: 20%; }
+          }
+        `}</style>
+      </div>
 
       {/* Secondary 3D Orb - Dark Space Blue Glass */}
+      {/* Mobile: smaller, bottom-right corner half off-screen */}
       <div
         className="orb-drift-4 absolute backdrop-blur-xl"
         style={{
-          width: 320,
-          height: 320,
-          right: '5%',
-          top: '50%',
           borderRadius: '50%',
           background:
             'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.06) 0%, rgba(63,43,150,0.06) 30%, rgba(0,0,0,0.4) 80%, rgba(0,0,0,0.9) 100%)',
@@ -66,11 +69,21 @@ export function FloatingOrbs() {
           opacity: 0.75,
           willChange: 'transform',
         }}
-      />
+      >
+        <style>{`
+          .orb-drift-4 {
+            width: 220px; height: 220px; right: -18%; top: auto; bottom: 15%; left: auto;
+          }
+          @media (min-width: 1024px) {
+            .orb-drift-4 { width: 320px; height: 320px; right: 5%; top: 50%; bottom: auto; }
+          }
+        `}</style>
+      </div>
 
       {/* Tertiary 3D Orb - Dark Ambient Pink Glass */}
+      {/* Hidden on mobile, shown on desktop */}
       <div
-        className="orb-drift-3 absolute backdrop-blur-xl"
+        className="orb-drift-3 absolute backdrop-blur-xl hidden lg:block"
         style={{
           width: 220,
           height: 220,
