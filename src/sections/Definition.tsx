@@ -1,4 +1,5 @@
 import { Eyebrow } from '../components/ui/Eyebrow';
+import { motion } from 'motion/react';
 
 const CONCEPTS = [
   {
@@ -81,17 +82,84 @@ export function Definition() {
                 </div>
 
                 {/* Abstract Graphic Block */}
-                <div className="flex-1 lg:w-1/2 flex justify-center">
+                <div className={`flex-1 lg:w-1/2 flex ${i === 0 ? 'justify-center lg:justify-end' : 'justify-center'}`}>
                   <div className="relative w-72 h-72 sm:w-96 sm:h-96 group">
                     {/* Glowing background blob */}
                     <div className="absolute inset-10 bg-brand-red/20 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
                     
                     {/* Glass shapes composing an abstract 3D-like object */}
                     {i === 0 && (
-                      // Entity visual (Cube-ish structure)
+                      // Entity visual — Knowledge Graph Node
                       <>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 sm:w-56 sm:h-56 bg-gradient-to-br from-white/20 to-white/5 border border-white/30 backdrop-blur-md rounded-2xl rotate-12 transition-transform duration-700 group-hover:rotate-45" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 sm:w-48 sm:h-48 bg-gradient-to-bl from-white/30 to-transparent border border-white/20 backdrop-blur-xl rounded-full -rotate-12 transition-transform duration-700 group-hover:-rotate-45" />
+                        {/* Outer orbit ring */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 rounded-full border border-white/[0.06]" />
+                        {/* Mid orbit ring */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 sm:w-56 sm:h-56 rounded-full border border-white/[0.10]" />
+                        {/* Inner orbit ring */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-white/[0.08]" />
+
+                        {/* Center Core — brand entity */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-brand-red/40 bg-brand-red/10 shadow-[0_0_30px_rgba(252,0,17,0.2)] flex items-center justify-center z-10 transition-shadow duration-700 group-hover:shadow-[0_0_50px_rgba(252,0,17,0.35)]">
+                          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-brand-red shadow-[0_0_12px_rgba(252,0,17,0.8)]" />
+                        </div>
+
+                        {/* Outer orbit — rotating attribute nodes */}
+                        <motion.div
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 pointer-events-none"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                        >
+                          {/* Node: I (Industry) */}
+                          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
+                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">I</span>
+                          </div>
+                          {/* Node: L (Location) */}
+                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
+                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">L</span>
+                          </div>
+                          {/* Node: dot */}
+                          <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/25 shadow-[0_0_8px_rgba(255,255,255,0.15)]" />
+                          {/* Node: dot */}
+                          <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/25 shadow-[0_0_8px_rgba(255,255,255,0.15)]" />
+                        </motion.div>
+
+                        {/* Mid orbit — counter-rotating nodes */}
+                        <motion.div
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 sm:w-56 sm:h-56 pointer-events-none"
+                          animate={{ rotate: -360 }}
+                          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+                        >
+                          {/* Node: S (Service) */}
+                          <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-brand-red/25 bg-brand-red/[0.06] backdrop-blur-sm flex items-center justify-center">
+                            <span className="text-[10px] sm:text-[11px] font-semibold text-brand-red/70">S</span>
+                          </div>
+                          {/* Node: A (Attribute) */}
+                          <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
+                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">A</span>
+                          </div>
+                          {/* Node: red dot */}
+                          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-brand-red shadow-[0_0_12px_rgba(252,0,17,0.6)]" />
+                        </motion.div>
+
+                        {/* Inner orbit — slow rotation */}
+                        <motion.div
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+                        >
+                          {/* Node: C (Context) */}
+                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
+                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">C</span>
+                          </div>
+                        </motion.div>
+
+                        {/* Connecting lines (SVG) */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 384 384">
+                          <line x1="192" y1="192" x2="192" y2="32" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+                          <line x1="192" y1="192" x2="352" y2="192" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+                          <line x1="192" y1="192" x2="192" y2="352" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+                          <line x1="192" y1="192" x2="32" y2="192" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+                        </svg>
                       </>
                     )}
                     {i === 1 && (
