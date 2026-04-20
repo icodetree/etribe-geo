@@ -29,7 +29,7 @@ export function Definition() {
   return (
     <section
       id="definition"
-      className="relative overflow-hidden bg-gradient-to-b from-ink-950 via-[#450a0a] to-ink-950 py-28 sm:py-32 lg:py-48"
+      className="relative overflow-hidden bg-gradient-to-b from-ink-950 via-[#2a0505] to-ink-950 py-28 sm:py-32 lg:py-48"
     >
       <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8">
         {/* Section Header */}
@@ -82,7 +82,7 @@ export function Definition() {
                 </div>
 
                 {/* Abstract Graphic Block */}
-                <div className={`flex-1 lg:w-1/2 flex ${i === 0 ? 'justify-center lg:justify-end' : 'justify-center'}`}>
+                <div className={`flex-1 lg:w-1/2 flex ${i === 0 ? 'justify-center lg:justify-end' : i === 1 ? 'justify-center lg:justify-start' : 'justify-center lg:justify-end'}`}>
                   <div className="relative w-72 h-72 sm:w-96 sm:h-96 group">
                     {/* Glowing background blob */}
                     <div className="absolute inset-10 bg-brand-red/20 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
@@ -163,12 +163,185 @@ export function Definition() {
                       </>
                     )}
                     {i === 1 && (
-                      // Intent visual (Floating layered planes)
-                      <>
-                        <div className="absolute top-[10%] left-[10%] w-36 h-48 sm:w-44 sm:h-60 bg-gradient-to-tr from-white/10 to-white/5 border-t border-l border-white/20 backdrop-blur-lg rounded-xl -rotate-12 transition-transform duration-700 group-hover:-translate-y-4" />
-                        <div className="absolute top-[20%] left-[25%] w-36 h-48 sm:w-44 sm:h-60 bg-gradient-to-bl from-brand-red/20 to-transparent border border-white/10 backdrop-blur-md rounded-xl rotate-6 transition-transform duration-700 group-hover:translate-x-4" />
-                        <div className="absolute top-[30%] left-[40%] w-36 h-48 sm:w-44 sm:h-60 bg-gradient-to-br from-white/30 to-white/0 border border-white/30 backdrop-blur-2xl rounded-xl rotate-12 transition-transform duration-700 group-hover:translate-y-4 group-hover:rotate-0" />
-                      </>
+                      // Intent visual — Typing Prompt
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-80 flex flex-col gap-4">
+                        {/* Glassmorphic prompt window */}
+                        <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+                          {/* Window chrome bar */}
+                          <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/[0.06]">
+                            <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
+                            <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
+                            <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
+                            <span className="ml-2 text-[10px] font-medium text-white/20 tracking-wide">AI PROMPT</span>
+                          </div>
+
+                          {/* Prompt lines */}
+                          <div className="px-5 py-5 sm:px-6 sm:py-6 flex flex-col gap-4">
+                            {/* Line 1 */}
+                            <motion.div
+                              className="flex items-start gap-2.5"
+                              animate={{
+                                opacity: [0.4, 0.4, 1, 1, 0.4, 0.4],
+                              }}
+                              transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.02, 0.05, 0.28, 0.33, 1], ease: 'easeInOut' }}
+                            >
+                              <motion.div
+                                className="mt-1 w-1.5 h-1.5 rounded-full shrink-0"
+                                animate={{
+                                  backgroundColor: [
+                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
+                                    '#fc0011', '#fc0011',
+                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
+                                  ],
+                                  boxShadow: [
+                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
+                                    '0 0 8px rgba(252,0,17,0.6)', '0 0 8px rgba(252,0,17,0.6)',
+                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
+                                  ],
+                                }}
+                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.02, 0.05, 0.28, 0.33, 1], ease: 'easeInOut' }}
+                              />
+                              <motion.span
+                                className="text-[13px] sm:text-[14px] font-medium leading-snug"
+                                animate={{
+                                  color: [
+                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
+                                    'rgba(255,255,255,0.90)', 'rgba(255,255,255,0.90)',
+                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
+                                  ],
+                                }}
+                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.02, 0.05, 0.28, 0.33, 1], ease: 'easeInOut' }}
+                              >
+                                "강남 맛집 추천해줘"
+                              </motion.span>
+                            </motion.div>
+
+                            {/* Line 2 */}
+                            <motion.div
+                              className="flex items-start gap-2.5"
+                              animate={{
+                                opacity: [0.4, 0.4, 1, 1, 0.4, 0.4],
+                              }}
+                              transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.30, 0.35, 0.60, 0.65, 1], ease: 'easeInOut' }}
+                            >
+                              <motion.div
+                                className="mt-1 w-1.5 h-1.5 rounded-full shrink-0"
+                                animate={{
+                                  backgroundColor: [
+                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
+                                    '#fc0011', '#fc0011',
+                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
+                                  ],
+                                  boxShadow: [
+                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
+                                    '0 0 8px rgba(252,0,17,0.6)', '0 0 8px rgba(252,0,17,0.6)',
+                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
+                                  ],
+                                }}
+                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.30, 0.35, 0.60, 0.65, 1], ease: 'easeInOut' }}
+                              />
+                              <motion.span
+                                className="text-[13px] sm:text-[14px] font-medium leading-snug"
+                                animate={{
+                                  color: [
+                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
+                                    'rgba(255,255,255,0.90)', 'rgba(255,255,255,0.90)',
+                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
+                                  ],
+                                }}
+                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.30, 0.35, 0.60, 0.65, 1], ease: 'easeInOut' }}
+                              >
+                                "A사 vs B사 비교해줘"
+                              </motion.span>
+                            </motion.div>
+
+                            {/* Line 3 */}
+                            <motion.div
+                              className="flex items-start gap-2.5"
+                              animate={{
+                                opacity: [0.4, 0.4, 1, 1, 0.4, 0.4],
+                              }}
+                              transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.62, 0.67, 0.90, 0.95, 1], ease: 'easeInOut' }}
+                            >
+                              <motion.div
+                                className="mt-1 w-1.5 h-1.5 rounded-full shrink-0"
+                                animate={{
+                                  backgroundColor: [
+                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
+                                    '#fc0011', '#fc0011',
+                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
+                                  ],
+                                  boxShadow: [
+                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
+                                    '0 0 8px rgba(252,0,17,0.6)', '0 0 8px rgba(252,0,17,0.6)',
+                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
+                                  ],
+                                }}
+                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.62, 0.67, 0.90, 0.95, 1], ease: 'easeInOut' }}
+                              />
+                              <motion.span
+                                className="text-[13px] sm:text-[14px] font-medium leading-snug"
+                                animate={{
+                                  color: [
+                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
+                                    'rgba(255,255,255,0.90)', 'rgba(255,255,255,0.90)',
+                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
+                                  ],
+                                }}
+                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.62, 0.67, 0.90, 0.95, 1], ease: 'easeInOut' }}
+                              >
+                                "가격 얼마야?"
+                              </motion.span>
+                            </motion.div>
+                          </div>
+
+                          {/* Input bar */}
+                          <div className="mx-4 mb-4 sm:mx-5 sm:mb-5 flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-2.5">
+                            <div className="w-0.5 h-4 bg-white/30 animate-pulse" />
+                            <span className="text-[12px] text-white/20 font-medium">질문을 입력하세요…</span>
+                            <svg className="ml-auto w-4 h-4 text-white/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Intent type labels below */}
+                        <div className="flex items-center justify-center gap-2">
+                          {['Recommend', 'Compare', 'Price'].map((label, idx) => (
+                            <motion.div
+                              key={label}
+                              className="px-3 py-1 rounded-full border text-[10px] sm:text-[11px] font-semibold tracking-wide"
+                              animate={{
+                                borderColor:
+                                  idx === 0
+                                    ? ['rgba(255,255,255,0.08)','rgba(255,255,255,0.08)','rgba(252,0,17,0.4)','rgba(252,0,17,0.4)','rgba(255,255,255,0.08)','rgba(255,255,255,0.08)']
+                                    : idx === 1
+                                    ? ['rgba(255,255,255,0.08)','rgba(255,255,255,0.08)','rgba(252,0,17,0.4)','rgba(252,0,17,0.4)','rgba(255,255,255,0.08)','rgba(255,255,255,0.08)']
+                                    : ['rgba(255,255,255,0.08)','rgba(255,255,255,0.08)','rgba(252,0,17,0.4)','rgba(252,0,17,0.4)','rgba(255,255,255,0.08)','rgba(255,255,255,0.08)'],
+                                color:
+                                  idx === 0
+                                    ? ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)']
+                                    : idx === 1
+                                    ? ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)']
+                                    : ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)'],
+                              }}
+                              transition={{
+                                duration: 7.5,
+                                repeat: Infinity,
+                                times:
+                                  idx === 0
+                                    ? [0, 0.02, 0.05, 0.28, 0.33, 1]
+                                    : idx === 1
+                                    ? [0, 0.30, 0.35, 0.60, 0.65, 1]
+                                    : [0, 0.62, 0.67, 0.90, 0.95, 1],
+                                ease: 'easeInOut',
+                              }}
+                            >
+                              {label}
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
                     )}
                     {i === 2 && (
                       // GEO visual (Intersecting ring/sphere)
