@@ -344,11 +344,102 @@ export function Definition() {
                       </div>
                     )}
                     {i === 2 && (
-                      // GEO visual (Intersecting ring/sphere)
-                      <>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 sm:w-72 sm:h-72 border-[12px] sm:border-[16px] border-white/10 backdrop-blur-md rounded-full rotate-[60deg] transition-transform duration-700 group-hover:scale-110" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 sm:w-52 sm:h-52 bg-gradient-to-tr from-brand-red/40 to-white/10 border border-white/30 backdrop-blur-xl rounded-full shadow-[inset_0_20px_40px_rgba(255,255,255,0.2)] transition-transform duration-700 group-hover:rotate-90" />
-                      </>
+                      // GEO visual — Gap-Fill Progress
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 sm:w-72 flex flex-col gap-3 sm:gap-3.5">
+                        {[
+                          { label: 'Brand Name', delay: 0 },
+                          { label: 'Service Info', delay: 1.2 },
+                          { label: 'Competitor Context', delay: 2.4 },
+                          { label: 'Pricing Data', delay: 3.6 },
+                        ].map((slot) => (
+                          <div key={slot.label} className="relative">
+                            {/* Empty dashed slot (background) */}
+                            <div className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between">
+                              <span className="text-[11px] sm:text-[12px] font-medium text-white/15 tracking-wide">{slot.label}</span>
+                              <span className="text-[10px] text-white/10">?</span>
+                            </div>
+
+                            {/* Filled card overlay — animates in */}
+                            <motion.div
+                              className="absolute inset-0 rounded-xl border border-white/15 bg-[#161616] px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between"
+                              initial={false}
+                              animate={{
+                                opacity: [0, 0, 1, 1, 1, 0],
+                                scale: [0.96, 0.96, 1, 1, 1, 0.96],
+                              }}
+                              transition={{
+                                duration: 8,
+                                repeat: Infinity,
+                                delay: slot.delay,
+                                times: [0, 0.08, 0.15, 0.55, 0.62, 0.70],
+                                ease: 'easeOut',
+                              }}
+                            >
+                              <span className="text-[11px] sm:text-[12px] font-semibold text-white/70 tracking-wide">{slot.label}</span>
+                              <motion.svg
+                                className="w-3.5 h-3.5 text-brand-red"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                animate={{
+                                  opacity: [0, 0, 1, 1, 1, 0],
+                                  scale: [0.5, 0.5, 1, 1, 1, 0.5],
+                                }}
+                                transition={{
+                                  duration: 8,
+                                  repeat: Infinity,
+                                  delay: slot.delay,
+                                  times: [0, 0.12, 0.20, 0.55, 0.62, 0.70],
+                                  ease: 'easeOut',
+                                }}
+                              >
+                                <path d="M20 6L9 17l-5-5" />
+                              </motion.svg>
+                            </motion.div>
+                          </div>
+                        ))}
+
+                        {/* Bottom progress indicator */}
+                        <div className="mt-1 flex items-center gap-3">
+                          <div className="flex-1 h-[3px] rounded-full bg-white/[0.06] overflow-hidden">
+                            <motion.div
+                              className="h-full rounded-full bg-gradient-to-r from-brand-red/80 to-brand-red"
+                              animate={{ width: ['0%', '25%', '50%', '75%', '100%', '100%', '0%'] }}
+                              transition={{
+                                duration: 8,
+                                repeat: Infinity,
+                                times: [0, 0.15, 0.30, 0.45, 0.60, 0.75, 0.80],
+                                ease: 'easeInOut',
+                              }}
+                            />
+                          </div>
+                          <motion.span
+                            className="text-[11px] font-semibold tabular-nums w-8 text-right"
+                            animate={{
+                              color: [
+                                'rgba(255,255,255,0.3)', 'rgba(255,255,255,0.5)',
+                                'rgba(255,255,255,0.5)', '#fc0011',
+                                '#fc0011', 'rgba(255,255,255,0.3)',
+                              ],
+                            }}
+                            transition={{
+                              duration: 8,
+                              repeat: Infinity,
+                              times: [0, 0.15, 0.45, 0.60, 0.75, 0.80],
+                              ease: 'easeInOut',
+                            }}
+                          >
+                            <motion.span
+                              animate={{ content: ['0%', '100%'] }}
+                            >
+                              GEO
+                            </motion.span>
+                          </motion.span>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>
