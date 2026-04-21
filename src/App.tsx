@@ -13,12 +13,14 @@ import { CTA } from './sections/CTA';
 import { Footer } from './sections/Footer';
 import { FloatingOrbs } from './components/FloatingOrbs';
 import { ScrollToTop } from './components/ui/ScrollToTop';
+import { StructuredData } from './seo/StructuredData';
 
 export default function App() {
   useReveal();
 
   return (
     <div className="relative min-h-[100dvh] overflow-x-hidden bg-ink-950 text-ink-50">
+      <StructuredData />
       <div className="noise" aria-hidden="true" />
       <FloatingOrbs />
       <Navigation />

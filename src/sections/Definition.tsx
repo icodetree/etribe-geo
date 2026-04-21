@@ -54,12 +54,14 @@ export function Definition() {
         </div>
 
         {/* Alternating Open Layout Rows */}
-        <div className="flex flex-col gap-10 lg:gap-20">
+        <dl className="flex flex-col gap-10 lg:gap-20">
           {CONCEPTS.map((c, i) => {
             const isEven = i % 2 === 1;
             return (
               <div
                 key={c.eng}
+                role="region"
+                aria-label={`${c.eng} 정의`}
                 className={`reveal flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-20 ${
                   isEven ? 'lg:flex-row-reverse' : ''
                 }`}
@@ -67,18 +69,18 @@ export function Definition() {
               >
                 {/* Text Block */}
                 <div className={`flex-1 lg:w-1/2 flex flex-col ${isEven ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}>
-                  <h3 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-none mb-3">
+                  <dt className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-none mb-3">
                     {c.kor}
-                  </h3>
+                  </dt>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-6 mt-1">
                     {c.label}
                   </p>
-                  <p className="text-xl font-medium text-white/90 mb-5 break-keep">
+                  <dd className="text-xl font-medium text-white/90 mb-5 break-keep">
                     {c.lead}
-                  </p>
-                  <p className="text-base text-white/60 leading-relaxed max-w-md break-keep">
+                  </dd>
+                  <dd className="text-base text-white/60 leading-relaxed max-w-md break-keep">
                     {c.body}
-                  </p>
+                  </dd>
                 </div>
 
                 {/* Abstract Graphic Block */}
@@ -446,7 +448,7 @@ export function Definition() {
               </div>
             );
           })}
-        </div>
+        </dl>
       </div>
     </section>
   );

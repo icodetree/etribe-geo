@@ -75,9 +75,9 @@ export function Process() {
               <div className="line-h h-full bg-gradient-to-r from-transparent via-white/25 to-transparent" />
             </div>
 
-            <div className="grid grid-cols-4 gap-6">
+            <ol className="grid grid-cols-4 gap-6 list-none m-0 p-0">
               {PHASES.map((p, i) => (
-                <div key={p.title} className="flex flex-col items-center h-full">
+                <li key={p.title} className="flex flex-col items-center h-full">
                   {/* Step marker on the line */}
                   <div
                     className="dot-pop relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/40 bg-ink-950 ring-4 ring-ink-900/40"
@@ -120,9 +120,9 @@ export function Process() {
                       </div>
                     </div>
                   </article>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </div>
 
@@ -135,9 +135,9 @@ export function Process() {
               aria-hidden="true"
             />
 
-            <div className="space-y-5 sm:space-y-6">
+            <ol className="space-y-5 sm:space-y-6 list-none m-0 p-0">
               {PHASES.map((p, i) => (
-                <div
+                <li
                   key={p.title}
                   className="reveal relative pl-10 sm:pl-14"
                   style={{ ['--i' as string]: i + 2 }}
@@ -183,9 +183,9 @@ export function Process() {
                       </div>
                     </div>
                   </article>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </div>
       </div>
