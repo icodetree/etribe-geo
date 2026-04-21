@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { animate, useInView } from 'motion/react';
+import { motion, animate, useInView, useScroll, useTransform } from 'motion/react';
+import type { MotionValue } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 
 const METRICS = [
@@ -38,6 +39,54 @@ function Counter({ value, suffixContent }: { value: number; suffixContent?: Reac
         {displayValue}
         {suffixContent}
       </span>
+    </div>
+  );
+}
+
+function FloatingCard({ metric, index, progress }: { metric: (typeof METRICS)[number]; index: number; progress: MotionValue<number> }) {
+  const stagger = index * 0.12;
+  const y = useTransform(progress, [stagger, stagger + 0.5], [50, 0], { clamp: true });
+  const opacity = useTransform(progress, [stagger, stagger + 0.4], [0, 1], { clamp: true });
+  const scale = useTransform(progress, [stagger, stagger + 0.5], [0.95, 1], { clamp: true });
+
+  return (
+    <motion.div style={{ y, opacity, scale }}>
+      <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-1.5 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04] hover:shadow-[0_15px_40px_-10px_rgba(255,255,255,0.05)] sm:rounded-3xl">
+        <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-50">
+          <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(255,255,255,0.2)_85%,rgba(255,255,255,1)_100%)] animate-spin-beam" />
+        </div>
+        <div className="relative z-10 flex items-baseline justify-between gap-4 rounded-[18px] bg-gradient-to-b from-white/[0.035] to-transparent p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:gap-6 sm:rounded-[22px] sm:p-6 lg:p-8">
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-display text-5xl font-medium tracking-tight text-white tabular sm:text-6xl lg:text-7xl">
+              <Counter value={metric.k} />
+            </span>
+            <span className="font-display text-lg text-brand-500 sm:text-xl">
+              {metric.u}
+            </span>
+          </div>
+          <p className="max-w-[10rem] text-right text-[12px] font-medium tracking-wide text-ink-300 break-keep sm:text-[13px] lg:text-sm">
+            {metric.v}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function MetricPillars() {
+  const pillarsRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: pillarsRef,
+    offset: ['start 80%', 'start 30%'],
+  });
+
+  return (
+    <div ref={pillarsRef} className="lg:col-span-5">
+      <div className="relative flex flex-col gap-3 sm:gap-4">
+        {METRICS.map((m, i) => (
+          <FloatingCard key={m.v} metric={m} index={i} progress={scrollYProgress} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -102,39 +151,8 @@ export function About() {
             </div>
           </div>
 
-          {/* ─── Right: Metric pillars ─── */}
-          <div className="lg:col-span-5">
-            <div className="relative flex flex-col gap-3 sm:gap-4">
-              {METRICS.map((m, i) => (
-                <div
-                  key={m.v}
-                  className="reveal"
-                  style={{ ['--i' as string]: i + 4 }}
-                >
-                  <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-1.5 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04] hover:shadow-[0_15px_40px_-10px_rgba(255,255,255,0.05)] sm:rounded-3xl">
-                    {/* Beam FX - Changed to White & 50% Opacity */}
-                    <div className="mask-border-beam absolute inset-0 z-0 pointer-events-none rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-50">
-                      <div className="absolute top-1/2 left-1/2 w-[250%] aspect-square bg-[conic-gradient(from_0deg,transparent_75%,rgba(255,255,255,0.2)_85%,rgba(255,255,255,1)_100%)] animate-spin-beam" />
-                    </div>
-
-                    <div className="relative z-10 flex items-baseline justify-between gap-4 rounded-[18px] bg-gradient-to-b from-white/[0.035] to-transparent p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:gap-6 sm:rounded-[22px] sm:p-6 lg:p-8">
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="font-display text-5xl font-medium tracking-tight text-white tabular sm:text-6xl lg:text-7xl">
-                        <Counter value={m.k} />
-                      </span>
-                      <span className="font-display text-lg text-brand-500 sm:text-xl">
-                        {m.u}
-                      </span>
-                    </div>
-                    <p className="max-w-[10rem] text-right text-[12px] font-medium tracking-wide text-ink-300 break-keep sm:text-[13px] lg:text-sm">
-                      {m.v}
-                    </p>
-                  </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* ─── Right: Metric pillars — scroll-driven float ─── */}
+          <MetricPillars />
         </div>
       </div>
     </section>
