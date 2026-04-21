@@ -110,7 +110,7 @@ const ROWS: Array<{
 function CellRender({ v, accent }: { v: Cell; accent?: boolean }) {
   if (v === true) {
     return (
-      <span className="text-base font-semibold text-white">
+      <span className={`text-base font-semibold text-white transition-colors duration-300 ${accent ? 'group-hover:text-brand-red' : ''}`}>
         있음
       </span>
     );
@@ -125,8 +125,8 @@ function CellRender({ v, accent }: { v: Cell; accent?: boolean }) {
   }
   return (
     <span
-      className={`text-[13px] font-medium break-keep sm:text-sm ${
-        accent ? 'text-white' : 'text-ink-300'
+      className={`text-[13px] font-medium break-keep sm:text-sm transition-colors duration-300 ${
+        accent ? 'text-white group-hover:text-brand-red' : 'text-ink-300'
       }`}
     >
       {v}
@@ -142,7 +142,7 @@ function SpotlightRow({ row: r }: { row: (typeof ROWS)[number] }) {
   });
 
   const bg = useTransform(scrollYProgress, [0, 0.6, 1], ['rgba(255,255,255,0)', 'rgba(255,255,255,0.06)', 'rgba(255,255,255,0)']);
-  const etribeBg = useTransform(scrollYProgress, [0, 0.6, 1], ['rgba(6,6,6,1)', 'rgba(30,8,8,1)', 'rgba(6,6,6,1)']);
+  // etribe column: no background, red left border only
   const rowOpacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.5, 1, 1, 0.5]);
 
   return (
@@ -164,8 +164,7 @@ function SpotlightRow({ row: r }: { row: (typeof ROWS)[number] }) {
       {COLS.map((c) => (
         <motion.td
           key={c.key}
-          className="px-6 py-5 transition-colors duration-300"
-          style={c.accent ? { backgroundColor: etribeBg } : undefined}
+          className={`px-6 py-5 transition-colors duration-300 ${c.accent ? 'border-l border-l-white/30' : ''}`}
         >
           <CellRender v={r.values[c.key]} accent={c.accent} />
         </motion.td>
@@ -224,7 +223,7 @@ export function Positioning() {
                   <th
                     key={c.key}
                     className={`relative w-[23%] px-6 py-5 text-left ${
-                      c.accent ? 'bg-[#060606]' : ''
+                      c.accent ? 'border-l border-l-white/30' : ''
                     }`}
                   >
                     <div className="flex flex-col items-start gap-1">
