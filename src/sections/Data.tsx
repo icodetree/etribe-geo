@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, animate } from 'motion/react';
+import { motion, useInView, useScroll, useTransform, animate } from 'motion/react';
+
+import type { MotionValue } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { ScrollDivider } from '../components/ui/ScrollDivider';
 
@@ -35,9 +37,33 @@ function Counter({ value, suffixContent }: { value: number; suffixContent?: Reac
   );
 }
 
+function ScrollBar({ rate, tone, progress, index }: { rate: number; tone: 'alarm' | 'neutral'; progress: MotionValue<number>; index: number }) {
+  const stagger = index * 0.08;
+  // Bar sweeps to 100% then settles at target rate
+  const rawWidth = useTransform(progress, [stagger, stagger + 0.25, stagger + 0.5], [0, 100, Math.max(rate, 1.5)], { clamp: true });
+  const width = useTransform(rawWidth, (v) => `${v}%`);
+
+  return (
+    <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-white/[0.04]">
+      <motion.div
+        className={`absolute inset-y-0 left-0 rounded-full ${
+          tone === 'alarm'
+            ? 'bg-gradient-to-r from-brand-500 to-brand-600'
+            : 'bg-white/80'
+        }`}
+        style={{ width }}
+      />
+    </div>
+  );
+}
+
 export function Data() {
   const sectionRef = useRef(null);
-  const isSectionInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const tableRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: tableRef,
+    offset: ['start 70%', 'start 40%'],
+  });
 
   return (
     <section id="data" ref={sectionRef} className="relative py-28 sm:py-32 lg:py-40">
@@ -90,6 +116,7 @@ export function Data() {
 
         {/* Results table */}
         <div
+          ref={tableRef}
           className="reveal mt-14 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent"
           style={{ ['--i' as string]: 3 }}
         >
@@ -116,23 +143,7 @@ export function Data() {
                 </div>
 
                 <div className="col-span-12 sm:col-span-6">
-                  <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-white/[0.04]">
-                    <motion.div
-                      className={`absolute inset-y-0 left-0 rounded-full ${
-                        r.tone === 'alarm'
-                          ? 'bg-gradient-to-r from-brand-500 to-brand-600'
-                          : 'bg-white/80'
-                      }`}
-                      initial={{ width: 0 }}
-                      animate={isSectionInView ? { width: ["0%", "100%", `${Math.max(r.rate, 1.5)}%`] } : {}}
-                      transition={{ 
-                        duration: 1.8, 
-                        times: [0, 0.4, 1], 
-                        ease: "easeInOut",
-                        delay: i * 0.1 + 0.5 
-                      }}
-                    />
-                  </div>
+                  <ScrollBar rate={r.rate} tone={r.tone} progress={scrollYProgress} index={i} />
                 </div>
 
                 <div className="col-span-12 text-right sm:col-span-2">
