@@ -1,25 +1,40 @@
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { CTAButton } from '../components/ui/Button';
 
 export function CTA() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 70%', 'start 20%'],
+  });
+
+  const redOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [0.3, 0.8, 1]);
+  const whiteOpacity = useTransform(scrollYProgress, [0, 0.5], [0, 0.035]);
+  const headingScale = useTransform(scrollYProgress, [0, 0.6], [0.95, 1]);
+
   return (
     <section
+      ref={sectionRef}
       id="cta"
       className="relative isolate overflow-hidden py-32 sm:py-40 lg:py-52"
     >
-      {/* Premium Vignette & Epic Glow */}
+      {/* Premium Vignette & Epic Glow — scroll-intensified */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[#030303]">
         {/* Deep Mars Brand Red radiating from the bottom */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-[100%] opacity-80"
+        <motion.div
+          className="absolute inset-x-0 bottom-0 h-[100%]"
           style={{
-            background: 'radial-gradient(ellipse at 50% 100%, rgba(252,0,17,0.18) 0%, rgba(252,0,17,0.04) 40%, transparent 70%)',
+            opacity: redOpacity,
+            background: 'radial-gradient(ellipse at 50% 100%, rgba(252,0,17,0.22) 0%, rgba(252,0,17,0.06) 40%, transparent 70%)',
           }}
         />
         {/* Soft white focus highlight in the absolute center for the text */}
-        <div
+        <motion.div
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(circle at 50% 40%, rgba(255,255,255,0.035) 0%, transparent 60%)',
+            opacity: whiteOpacity,
+            background: 'radial-gradient(circle at 50% 40%, rgba(255,255,255,1) 0%, transparent 60%)',
           }}
         />
         {/* Top subtle hairline glow connecting from the previous section */}
@@ -33,14 +48,14 @@ export function CTA() {
         >
           Free Diagnosis
         </p>
-        <h2
+        <motion.h2
           className="reveal mt-8 font-display text-5xl leading-[0.95] font-medium tracking-tight text-white sm:text-6xl lg:text-[7rem]"
-          style={{ ['--i' as string]: 1 }}
+          style={{ ['--i' as string]: 1, scale: headingScale }}
         >
           ASK AI.
           <br />
           <span className="display-italic text-white">SEE</span> YOUR BRAND.
-        </h2>
+        </motion.h2>
         <p
           className="reveal mx-auto mt-10 max-w-2xl text-lg leading-relaxed text-ink-300 break-keep sm:text-xl"
           style={{ ['--i' as string]: 2 }}
