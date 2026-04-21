@@ -1,5 +1,6 @@
+import { useRef } from 'react';
 import { Eyebrow } from '../components/ui/Eyebrow';
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 
 const CONCEPTS = [
   {
@@ -24,6 +25,162 @@ const CONCEPTS = [
     body: 'AI의 지식 공백을 우리 정보로 채워, 답변 안에 우리가 포함되도록 설계합니다. 검색 엔진이 아닌 생성 엔진을 위한 완벽한 최적화입니다.',
   },
 ];
+
+function ConceptRow({ concept: c, index: i }: { concept: (typeof CONCEPTS)[number]; index: number }) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const isEven = i % 2 === 1;
+  const { scrollYProgress } = useScroll({
+    target: rowRef,
+    offset: ['start 85%', 'start 35%'],
+  });
+
+  // Text slides in from its side, graphic slides in from the opposite side
+  const dir = isEven ? -1 : 1;
+  const textX = useTransform(scrollYProgress, [0, 1], [-60 * dir, 0]);
+  const graphicX = useTransform(scrollYProgress, [0, 1], [60 * dir, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const graphicOpacity = useTransform(scrollYProgress, [0.1, 0.6], [0, 1]);
+
+  return (
+    <div
+      ref={rowRef}
+      key={c.eng}
+      role="region"
+      aria-label={`${c.eng} 정의`}
+      className={`reveal flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-20 ${
+        isEven ? 'lg:flex-row-reverse' : ''
+      }`}
+      style={{ ['--i' as string]: i + 2 }}
+    >
+      {/* Text Block — parallax: slides up from below */}
+      <motion.div
+        className={`flex-1 lg:w-1/2 flex flex-col ${isEven ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
+        style={{ x: textX, opacity: textOpacity }}
+      >
+        <dt className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-none mb-3">
+          {c.kor}
+        </dt>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-6 mt-1">
+          {c.label}
+        </p>
+        <dd className="text-xl font-medium text-white/90 mb-5 break-keep">
+          {c.lead}
+        </dd>
+        <dd className="text-base text-white/60 leading-relaxed max-w-md break-keep">
+          {c.body}
+        </dd>
+      </motion.div>
+
+      {/* Abstract Graphic Block — parallax: slides down from above */}
+      <motion.div
+        className={`flex-1 lg:w-1/2 flex ${i === 0 ? 'justify-center lg:justify-end' : i === 1 ? 'justify-center lg:justify-start' : 'justify-center lg:justify-end'}`}
+        style={{ x: graphicX, opacity: graphicOpacity }}
+      >
+        <div className="relative w-72 h-72 sm:w-96 sm:h-96 group">
+          {/* Glowing background blob */}
+          <div className="absolute inset-10 bg-brand-red/20 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
+
+          {/* === Entity visual === */}
+          {i === 0 && (
+            <>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 rounded-full border border-white/[0.06]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 sm:w-56 sm:h-56 rounded-full border border-white/[0.10]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-white/[0.08]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-brand-red/40 bg-brand-red/10 shadow-[0_0_30px_rgba(252,0,17,0.2)] flex items-center justify-center z-10 transition-shadow duration-700 group-hover:shadow-[0_0_50px_rgba(252,0,17,0.35)]">
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-brand-red shadow-[0_0_12px_rgba(252,0,17,0.8)]" />
+              </div>
+              <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 pointer-events-none" animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center"><span className="text-[10px] sm:text-[11px] font-semibold text-white/50">I</span></div>
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center"><span className="text-[10px] sm:text-[11px] font-semibold text-white/50">L</span></div>
+                <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/25 shadow-[0_0_8px_rgba(255,255,255,0.15)]" />
+                <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/25 shadow-[0_0_8px_rgba(255,255,255,0.15)]" />
+              </motion.div>
+              <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 sm:w-56 sm:h-56 pointer-events-none" animate={{ rotate: -360 }} transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}>
+                <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-brand-red/25 bg-brand-red/[0.06] backdrop-blur-sm flex items-center justify-center"><span className="text-[10px] sm:text-[11px] font-semibold text-brand-red/70">S</span></div>
+                <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center"><span className="text-[10px] sm:text-[11px] font-semibold text-white/50">A</span></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-brand-red shadow-[0_0_12px_rgba(252,0,17,0.6)]" />
+              </motion.div>
+              <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none" animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}>
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center"><span className="text-[10px] sm:text-[11px] font-semibold text-white/50">C</span></div>
+              </motion.div>
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 384 384">
+                <line x1="192" y1="192" x2="192" y2="32" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+                <line x1="192" y1="192" x2="352" y2="192" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+                <line x1="192" y1="192" x2="192" y2="352" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+                <line x1="192" y1="192" x2="32" y2="192" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
+              </svg>
+            </>
+          )}
+
+          {/* === Intent visual === */}
+          {i === 1 && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-80 flex flex-col gap-4">
+              <div className="relative rounded-2xl border border-white/10 bg-[#161616] backdrop-blur-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/[0.06]">
+                  <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
+                  <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
+                  <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
+                  <span className="ml-2 text-[10px] font-medium text-white/20 tracking-wide">AI PROMPT</span>
+                </div>
+                <div className="px-5 py-5 sm:px-6 sm:py-6 flex flex-col gap-4">
+                  {[
+                    { text: '"강남 맛집 추천해줘"', times: [0, 0.02, 0.05, 0.28, 0.33, 1] },
+                    { text: '"A사 vs B사 비교해줘"', times: [0, 0.30, 0.35, 0.60, 0.65, 1] },
+                    { text: '"가격 얼마야?"', times: [0, 0.62, 0.67, 0.90, 0.95, 1] },
+                  ].map((line) => (
+                    <motion.div key={line.text} className="flex items-start gap-2.5" animate={{ opacity: [0.4, 0.4, 1, 1, 0.4, 0.4] }} transition={{ duration: 7.5, repeat: Infinity, times: line.times, ease: 'easeInOut' }}>
+                      <motion.div className="mt-1 w-1.5 h-1.5 rounded-full shrink-0" animate={{ backgroundColor: ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)'], boxShadow: ['0 0 0px rgba(252,0,17,0)','0 0 0px rgba(252,0,17,0)','0 0 8px rgba(252,0,17,0.6)','0 0 8px rgba(252,0,17,0.6)','0 0 0px rgba(252,0,17,0)','0 0 0px rgba(252,0,17,0)'] }} transition={{ duration: 7.5, repeat: Infinity, times: line.times, ease: 'easeInOut' }} />
+                      <motion.span className="text-[13px] sm:text-[14px] font-medium leading-snug" animate={{ color: ['rgba(255,255,255,0.35)','rgba(255,255,255,0.35)','rgba(255,255,255,0.90)','rgba(255,255,255,0.90)','rgba(255,255,255,0.35)','rgba(255,255,255,0.35)'] }} transition={{ duration: 7.5, repeat: Infinity, times: line.times, ease: 'easeInOut' }}>{line.text}</motion.span>
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="mx-4 mb-4 sm:mx-5 sm:mb-5 flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-2.5">
+                  <div className="w-0.5 h-4 bg-white/30 animate-pulse" />
+                  <span className="text-[12px] text-white/20 font-medium">질문을 입력하세요…</span>
+                  <svg className="ml-auto w-4 h-4 text-white/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
+                </div>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                {['Recommend', 'Compare', 'Price'].map((label, idx) => (
+                  <motion.div key={label} className="px-3 py-1 rounded-full border text-[10px] sm:text-[11px] font-semibold tracking-wide" animate={{ borderColor: ['rgba(255,255,255,0.08)','rgba(255,255,255,0.08)','rgba(252,0,17,0.4)','rgba(252,0,17,0.4)','rgba(255,255,255,0.08)','rgba(255,255,255,0.08)'], color: ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)'] }} transition={{ duration: 7.5, repeat: Infinity, times: idx === 0 ? [0,0.02,0.05,0.28,0.33,1] : idx === 1 ? [0,0.30,0.35,0.60,0.65,1] : [0,0.62,0.67,0.90,0.95,1], ease: 'easeInOut' }}>{label}</motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* === GEO visual === */}
+          {i === 2 && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 sm:w-72 flex flex-col gap-3 sm:gap-3.5">
+              {[
+                { label: 'Brand Name', delay: 0 },
+                { label: 'Service Info', delay: 1.2 },
+                { label: 'Competitor Context', delay: 2.4 },
+                { label: 'Pricing Data', delay: 3.6 },
+              ].map((slot) => (
+                <div key={slot.label} className="relative">
+                  <div className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between">
+                    <span className="text-[11px] sm:text-[12px] font-medium text-white/15 tracking-wide">{slot.label}</span>
+                    <span className="text-[10px] text-white/10">?</span>
+                  </div>
+                  <motion.div className="absolute inset-0 rounded-xl border border-white/15 bg-[#161616] px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between" initial={false} animate={{ opacity: [0,0,1,1,1,0], scale: [0.96,0.96,1,1,1,0.96] }} transition={{ duration: 8, repeat: Infinity, delay: slot.delay, times: [0,0.08,0.15,0.55,0.62,0.70], ease: 'easeOut' }}>
+                    <span className="text-[11px] sm:text-[12px] font-semibold text-white/70 tracking-wide">{slot.label}</span>
+                    <motion.svg className="w-3.5 h-3.5 text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" animate={{ opacity: [0,0,1,1,1,0], scale: [0.5,0.5,1,1,1,0.5] }} transition={{ duration: 8, repeat: Infinity, delay: slot.delay, times: [0,0.12,0.20,0.55,0.62,0.70], ease: 'easeOut' }}><path d="M20 6L9 17l-5-5" /></motion.svg>
+                  </motion.div>
+                </div>
+              ))}
+              <div className="mt-1 flex items-center gap-3">
+                <div className="flex-1 h-[3px] rounded-full bg-white/[0.06] overflow-hidden">
+                  <motion.div className="h-full rounded-full bg-gradient-to-r from-brand-red/80 to-brand-red" animate={{ width: ['0%','25%','50%','75%','100%','100%','0%'] }} transition={{ duration: 8, repeat: Infinity, times: [0,0.15,0.30,0.45,0.60,0.75,0.80], ease: 'easeInOut' }} />
+                </div>
+                <motion.span className="text-[11px] font-semibold tabular-nums w-8 text-right" animate={{ color: ['rgba(255,255,255,0.3)','rgba(255,255,255,0.5)','rgba(255,255,255,0.5)','#fc0011','#fc0011','rgba(255,255,255,0.3)'] }} transition={{ duration: 8, repeat: Infinity, times: [0,0.15,0.45,0.60,0.75,0.80], ease: 'easeInOut' }}>GEO</motion.span>
+              </div>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 export function Definition() {
   return (
@@ -55,399 +212,9 @@ export function Definition() {
 
         {/* Alternating Open Layout Rows */}
         <dl className="flex flex-col gap-10 lg:gap-20">
-          {CONCEPTS.map((c, i) => {
-            const isEven = i % 2 === 1;
-            return (
-              <div
-                key={c.eng}
-                role="region"
-                aria-label={`${c.eng} 정의`}
-                className={`reveal flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-20 ${
-                  isEven ? 'lg:flex-row-reverse' : ''
-                }`}
-                style={{ ['--i' as string]: i + 2 }}
-              >
-                {/* Text Block */}
-                <div className={`flex-1 lg:w-1/2 flex flex-col ${isEven ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}>
-                  <dt className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-none mb-3">
-                    {c.kor}
-                  </dt>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-6 mt-1">
-                    {c.label}
-                  </p>
-                  <dd className="text-xl font-medium text-white/90 mb-5 break-keep">
-                    {c.lead}
-                  </dd>
-                  <dd className="text-base text-white/60 leading-relaxed max-w-md break-keep">
-                    {c.body}
-                  </dd>
-                </div>
-
-                {/* Abstract Graphic Block */}
-                <div className={`flex-1 lg:w-1/2 flex ${i === 0 ? 'justify-center lg:justify-end' : i === 1 ? 'justify-center lg:justify-start' : 'justify-center lg:justify-end'}`}>
-                  <div className="relative w-72 h-72 sm:w-96 sm:h-96 group">
-                    {/* Glowing background blob */}
-                    <div className="absolute inset-10 bg-brand-red/20 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
-                    
-                    {/* Glass shapes composing an abstract 3D-like object */}
-                    {i === 0 && (
-                      // Entity visual — Knowledge Graph Node
-                      <>
-                        {/* Outer orbit ring */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 rounded-full border border-white/[0.06]" />
-                        {/* Mid orbit ring */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 sm:w-56 sm:h-56 rounded-full border border-white/[0.10]" />
-                        {/* Inner orbit ring */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-white/[0.08]" />
-
-                        {/* Center Core — brand entity */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-brand-red/40 bg-brand-red/10 shadow-[0_0_30px_rgba(252,0,17,0.2)] flex items-center justify-center z-10 transition-shadow duration-700 group-hover:shadow-[0_0_50px_rgba(252,0,17,0.35)]">
-                          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-brand-red shadow-[0_0_12px_rgba(252,0,17,0.8)]" />
-                        </div>
-
-                        {/* Outer orbit — rotating attribute nodes */}
-                        <motion.div
-                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 pointer-events-none"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                        >
-                          {/* Node: I (Industry) */}
-                          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
-                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">I</span>
-                          </div>
-                          {/* Node: L (Location) */}
-                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
-                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">L</span>
-                          </div>
-                          {/* Node: dot */}
-                          <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/25 shadow-[0_0_8px_rgba(255,255,255,0.15)]" />
-                          {/* Node: dot */}
-                          <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/25 shadow-[0_0_8px_rgba(255,255,255,0.15)]" />
-                        </motion.div>
-
-                        {/* Mid orbit — counter-rotating nodes */}
-                        <motion.div
-                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 sm:w-56 sm:h-56 pointer-events-none"
-                          animate={{ rotate: -360 }}
-                          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
-                        >
-                          {/* Node: S (Service) */}
-                          <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-brand-red/25 bg-brand-red/[0.06] backdrop-blur-sm flex items-center justify-center">
-                            <span className="text-[10px] sm:text-[11px] font-semibold text-brand-red/70">S</span>
-                          </div>
-                          {/* Node: A (Attribute) */}
-                          <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
-                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">A</span>
-                          </div>
-                          {/* Node: red dot */}
-                          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-brand-red shadow-[0_0_12px_rgba(252,0,17,0.6)]" />
-                        </motion.div>
-
-                        {/* Inner orbit — slow rotation */}
-                        <motion.div
-                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-                        >
-                          {/* Node: C (Context) */}
-                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm flex items-center justify-center">
-                            <span className="text-[10px] sm:text-[11px] font-semibold text-white/50">C</span>
-                          </div>
-                        </motion.div>
-
-                        {/* Connecting lines (SVG) */}
-                        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 384 384">
-                          <line x1="192" y1="192" x2="192" y2="32" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
-                          <line x1="192" y1="192" x2="352" y2="192" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
-                          <line x1="192" y1="192" x2="192" y2="352" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
-                          <line x1="192" y1="192" x2="32" y2="192" stroke="white" strokeOpacity="0.06" strokeWidth="1" />
-                        </svg>
-                      </>
-                    )}
-                    {i === 1 && (
-                      // Intent visual — Typing Prompt
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-80 flex flex-col gap-4">
-                        {/* Glassmorphic prompt window */}
-                        <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
-                          {/* Window chrome bar */}
-                          <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/[0.06]">
-                            <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
-                            <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
-                            <div className="w-[7px] h-[7px] rounded-full bg-white/10" />
-                            <span className="ml-2 text-[10px] font-medium text-white/20 tracking-wide">AI PROMPT</span>
-                          </div>
-
-                          {/* Prompt lines */}
-                          <div className="px-5 py-5 sm:px-6 sm:py-6 flex flex-col gap-4">
-                            {/* Line 1 */}
-                            <motion.div
-                              className="flex items-start gap-2.5"
-                              animate={{
-                                opacity: [0.4, 0.4, 1, 1, 0.4, 0.4],
-                              }}
-                              transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.02, 0.05, 0.28, 0.33, 1], ease: 'easeInOut' }}
-                            >
-                              <motion.div
-                                className="mt-1 w-1.5 h-1.5 rounded-full shrink-0"
-                                animate={{
-                                  backgroundColor: [
-                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
-                                    '#fc0011', '#fc0011',
-                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
-                                  ],
-                                  boxShadow: [
-                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
-                                    '0 0 8px rgba(252,0,17,0.6)', '0 0 8px rgba(252,0,17,0.6)',
-                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
-                                  ],
-                                }}
-                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.02, 0.05, 0.28, 0.33, 1], ease: 'easeInOut' }}
-                              />
-                              <motion.span
-                                className="text-[13px] sm:text-[14px] font-medium leading-snug"
-                                animate={{
-                                  color: [
-                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
-                                    'rgba(255,255,255,0.90)', 'rgba(255,255,255,0.90)',
-                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
-                                  ],
-                                }}
-                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.02, 0.05, 0.28, 0.33, 1], ease: 'easeInOut' }}
-                              >
-                                "강남 맛집 추천해줘"
-                              </motion.span>
-                            </motion.div>
-
-                            {/* Line 2 */}
-                            <motion.div
-                              className="flex items-start gap-2.5"
-                              animate={{
-                                opacity: [0.4, 0.4, 1, 1, 0.4, 0.4],
-                              }}
-                              transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.30, 0.35, 0.60, 0.65, 1], ease: 'easeInOut' }}
-                            >
-                              <motion.div
-                                className="mt-1 w-1.5 h-1.5 rounded-full shrink-0"
-                                animate={{
-                                  backgroundColor: [
-                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
-                                    '#fc0011', '#fc0011',
-                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
-                                  ],
-                                  boxShadow: [
-                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
-                                    '0 0 8px rgba(252,0,17,0.6)', '0 0 8px rgba(252,0,17,0.6)',
-                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
-                                  ],
-                                }}
-                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.30, 0.35, 0.60, 0.65, 1], ease: 'easeInOut' }}
-                              />
-                              <motion.span
-                                className="text-[13px] sm:text-[14px] font-medium leading-snug"
-                                animate={{
-                                  color: [
-                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
-                                    'rgba(255,255,255,0.90)', 'rgba(255,255,255,0.90)',
-                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
-                                  ],
-                                }}
-                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.30, 0.35, 0.60, 0.65, 1], ease: 'easeInOut' }}
-                              >
-                                "A사 vs B사 비교해줘"
-                              </motion.span>
-                            </motion.div>
-
-                            {/* Line 3 */}
-                            <motion.div
-                              className="flex items-start gap-2.5"
-                              animate={{
-                                opacity: [0.4, 0.4, 1, 1, 0.4, 0.4],
-                              }}
-                              transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.62, 0.67, 0.90, 0.95, 1], ease: 'easeInOut' }}
-                            >
-                              <motion.div
-                                className="mt-1 w-1.5 h-1.5 rounded-full shrink-0"
-                                animate={{
-                                  backgroundColor: [
-                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
-                                    '#fc0011', '#fc0011',
-                                    'rgba(255,255,255,0.25)', 'rgba(255,255,255,0.25)',
-                                  ],
-                                  boxShadow: [
-                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
-                                    '0 0 8px rgba(252,0,17,0.6)', '0 0 8px rgba(252,0,17,0.6)',
-                                    '0 0 0px rgba(252,0,17,0)', '0 0 0px rgba(252,0,17,0)',
-                                  ],
-                                }}
-                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.62, 0.67, 0.90, 0.95, 1], ease: 'easeInOut' }}
-                              />
-                              <motion.span
-                                className="text-[13px] sm:text-[14px] font-medium leading-snug"
-                                animate={{
-                                  color: [
-                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
-                                    'rgba(255,255,255,0.90)', 'rgba(255,255,255,0.90)',
-                                    'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.35)',
-                                  ],
-                                }}
-                                transition={{ duration: 7.5, repeat: Infinity, times: [0, 0.62, 0.67, 0.90, 0.95, 1], ease: 'easeInOut' }}
-                              >
-                                "가격 얼마야?"
-                              </motion.span>
-                            </motion.div>
-                          </div>
-
-                          {/* Input bar */}
-                          <div className="mx-4 mb-4 sm:mx-5 sm:mb-5 flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-2.5">
-                            <div className="w-0.5 h-4 bg-white/30 animate-pulse" />
-                            <span className="text-[12px] text-white/20 font-medium">질문을 입력하세요…</span>
-                            <svg className="ml-auto w-4 h-4 text-white/15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                            </svg>
-                          </div>
-                        </div>
-
-                        {/* Intent type labels below */}
-                        <div className="flex items-center justify-center gap-2">
-                          {['Recommend', 'Compare', 'Price'].map((label, idx) => (
-                            <motion.div
-                              key={label}
-                              className="px-3 py-1 rounded-full border text-[10px] sm:text-[11px] font-semibold tracking-wide"
-                              animate={{
-                                borderColor:
-                                  idx === 0
-                                    ? ['rgba(255,255,255,0.08)','rgba(255,255,255,0.08)','rgba(252,0,17,0.4)','rgba(252,0,17,0.4)','rgba(255,255,255,0.08)','rgba(255,255,255,0.08)']
-                                    : idx === 1
-                                    ? ['rgba(255,255,255,0.08)','rgba(255,255,255,0.08)','rgba(252,0,17,0.4)','rgba(252,0,17,0.4)','rgba(255,255,255,0.08)','rgba(255,255,255,0.08)']
-                                    : ['rgba(255,255,255,0.08)','rgba(255,255,255,0.08)','rgba(252,0,17,0.4)','rgba(252,0,17,0.4)','rgba(255,255,255,0.08)','rgba(255,255,255,0.08)'],
-                                color:
-                                  idx === 0
-                                    ? ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)']
-                                    : idx === 1
-                                    ? ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)']
-                                    : ['rgba(255,255,255,0.25)','rgba(255,255,255,0.25)','#fc0011','#fc0011','rgba(255,255,255,0.25)','rgba(255,255,255,0.25)'],
-                              }}
-                              transition={{
-                                duration: 7.5,
-                                repeat: Infinity,
-                                times:
-                                  idx === 0
-                                    ? [0, 0.02, 0.05, 0.28, 0.33, 1]
-                                    : idx === 1
-                                    ? [0, 0.30, 0.35, 0.60, 0.65, 1]
-                                    : [0, 0.62, 0.67, 0.90, 0.95, 1],
-                                ease: 'easeInOut',
-                              }}
-                            >
-                              {label}
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {i === 2 && (
-                      // GEO visual — Gap-Fill Progress
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 sm:w-72 flex flex-col gap-3 sm:gap-3.5">
-                        {[
-                          { label: 'Brand Name', delay: 0 },
-                          { label: 'Service Info', delay: 1.2 },
-                          { label: 'Competitor Context', delay: 2.4 },
-                          { label: 'Pricing Data', delay: 3.6 },
-                        ].map((slot) => (
-                          <div key={slot.label} className="relative">
-                            {/* Empty dashed slot (background) */}
-                            <div className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between">
-                              <span className="text-[11px] sm:text-[12px] font-medium text-white/15 tracking-wide">{slot.label}</span>
-                              <span className="text-[10px] text-white/10">?</span>
-                            </div>
-
-                            {/* Filled card overlay — animates in */}
-                            <motion.div
-                              className="absolute inset-0 rounded-xl border border-white/15 bg-[#161616] px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between"
-                              initial={false}
-                              animate={{
-                                opacity: [0, 0, 1, 1, 1, 0],
-                                scale: [0.96, 0.96, 1, 1, 1, 0.96],
-                              }}
-                              transition={{
-                                duration: 8,
-                                repeat: Infinity,
-                                delay: slot.delay,
-                                times: [0, 0.08, 0.15, 0.55, 0.62, 0.70],
-                                ease: 'easeOut',
-                              }}
-                            >
-                              <span className="text-[11px] sm:text-[12px] font-semibold text-white/70 tracking-wide">{slot.label}</span>
-                              <motion.svg
-                                className="w-3.5 h-3.5 text-brand-red"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                animate={{
-                                  opacity: [0, 0, 1, 1, 1, 0],
-                                  scale: [0.5, 0.5, 1, 1, 1, 0.5],
-                                }}
-                                transition={{
-                                  duration: 8,
-                                  repeat: Infinity,
-                                  delay: slot.delay,
-                                  times: [0, 0.12, 0.20, 0.55, 0.62, 0.70],
-                                  ease: 'easeOut',
-                                }}
-                              >
-                                <path d="M20 6L9 17l-5-5" />
-                              </motion.svg>
-                            </motion.div>
-                          </div>
-                        ))}
-
-                        {/* Bottom progress indicator */}
-                        <div className="mt-1 flex items-center gap-3">
-                          <div className="flex-1 h-[3px] rounded-full bg-white/[0.06] overflow-hidden">
-                            <motion.div
-                              className="h-full rounded-full bg-gradient-to-r from-brand-red/80 to-brand-red"
-                              animate={{ width: ['0%', '25%', '50%', '75%', '100%', '100%', '0%'] }}
-                              transition={{
-                                duration: 8,
-                                repeat: Infinity,
-                                times: [0, 0.15, 0.30, 0.45, 0.60, 0.75, 0.80],
-                                ease: 'easeInOut',
-                              }}
-                            />
-                          </div>
-                          <motion.span
-                            className="text-[11px] font-semibold tabular-nums w-8 text-right"
-                            animate={{
-                              color: [
-                                'rgba(255,255,255,0.3)', 'rgba(255,255,255,0.5)',
-                                'rgba(255,255,255,0.5)', '#fc0011',
-                                '#fc0011', 'rgba(255,255,255,0.3)',
-                              ],
-                            }}
-                            transition={{
-                              duration: 8,
-                              repeat: Infinity,
-                              times: [0, 0.15, 0.45, 0.60, 0.75, 0.80],
-                              ease: 'easeInOut',
-                            }}
-                          >
-                            <motion.span
-                              animate={{ content: ['0%', '100%'] }}
-                            >
-                              GEO
-                            </motion.span>
-                          </motion.span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {CONCEPTS.map((c, i) => (
+            <ConceptRow key={c.eng} concept={c} index={i} />
+          ))}
         </dl>
       </div>
     </section>
