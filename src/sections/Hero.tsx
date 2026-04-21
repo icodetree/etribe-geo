@@ -1,4 +1,5 @@
-import { motion } from 'motion/react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { CTAButton } from '../components/ui/Button';
 // import { AnimatedCounter } from '../components/ui/AnimatedCounter';
 import { DotWave } from '../components/DotWave';
@@ -13,8 +14,20 @@ const PLATFORMS = ['ChatGPT', 'Perplexity', 'Claude', 'Gemini'];
 // ];
 
 export function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const videoScale = useTransform(scrollYProgress, [0, 0.5], [0.92, 1]);
+  const videoY = useTransform(scrollYProgress, [0, 0.6], [40, 0]);
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.3], [0.7, 1]);
+  const glowOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0.1, 0.3]);
+
   return (
     <section
+      ref={heroRef}
       id="top"
       className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-36 lg:pt-44 lg:pb-28"
     >
@@ -145,13 +158,13 @@ export function Hero() {
         */}
 
         {/* ─── Service Preview — Premium 1px Chrome Rim High-Intensity Display ─── */}
-        <div
+        <motion.div
           className="reveal mt-10 sm:mt-14"
-          style={{ ['--i' as string]: 8 }}
+          style={{ ['--i' as string]: 8, scale: videoScale, y: videoY, opacity: videoOpacity }}
         >
           <div className="relative mx-auto max-w-5xl px-4 sm:px-0">
             {/* Ambient Ground Glow — Matching screenshot's warm/reddish lighting */}
-            <div className="absolute -bottom-16 inset-x-0 mx-auto w-[90%] h-32 bg-brand-red/10 blur-[100px] rounded-full pointer-events-none opacity-10" aria-hidden="true" />
+            <motion.div className="absolute -bottom-16 inset-x-0 mx-auto w-[90%] h-32 bg-brand-red/10 blur-[100px] rounded-full pointer-events-none" aria-hidden="true" style={{ opacity: glowOpacity }} />
             
             {/* Bottom fade — blends into page background */}
             <div
@@ -222,7 +235,7 @@ export function Hero() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
