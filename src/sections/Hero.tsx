@@ -212,7 +212,7 @@ export function Hero() {
                   {/* Video */}
                   <video
                     className="relative block w-full aspect-video object-fill"
-                    src={`${import.meta.env.BASE_URL}geo_movie_01.mp4`}
+                    src={`${import.meta.env.BASE_URL}movie/geo_movie_01.mp4`}
                     autoPlay
                     loop
                     muted
