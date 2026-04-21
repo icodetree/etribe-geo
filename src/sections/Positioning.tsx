@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { ScrollDivider } from '../components/ui/ScrollDivider';
 
@@ -132,6 +134,46 @@ function CellRender({ v, accent }: { v: Cell; accent?: boolean }) {
   );
 }
 
+function SpotlightRow({ row: r }: { row: (typeof ROWS)[number] }) {
+  const rowRef = useRef<HTMLTableRowElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: rowRef,
+    offset: ['start 75%', 'start 45%'],
+  });
+
+  const bg = useTransform(scrollYProgress, [0, 0.6, 1], ['rgba(255,255,255,0)', 'rgba(255,255,255,0.06)', 'rgba(255,255,255,0)']);
+  const etribeBg = useTransform(scrollYProgress, [0, 0.6, 1], ['rgba(6,6,6,1)', 'rgba(30,8,8,1)', 'rgba(6,6,6,1)']);
+  const rowOpacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.5, 1, 1, 0.5]);
+
+  return (
+    <motion.tr
+      ref={rowRef}
+      className="group border-t border-white/[0.08] hover:!bg-brand-red/[0.09] hover:!opacity-100 transition-colors duration-500"
+      style={{ backgroundColor: bg, opacity: rowOpacity }}
+    >
+      <td className="px-6 py-5">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[11px] font-medium tracking-[0.18em] text-ink-400 uppercase">
+            {r.category}
+          </span>
+          <span className="text-[15px] font-medium text-white break-keep">
+            {r.metric}
+          </span>
+        </div>
+      </td>
+      {COLS.map((c) => (
+        <motion.td
+          key={c.key}
+          className="px-6 py-5 transition-colors duration-300"
+          style={c.accent ? { backgroundColor: etribeBg } : undefined}
+        >
+          <CellRender v={r.values[c.key]} accent={c.accent} />
+        </motion.td>
+      ))}
+    </motion.tr>
+  );
+}
+
 export function Positioning() {
   return (
     <section id="positioning" className="relative py-16 sm:py-28 lg:py-40">
@@ -199,31 +241,7 @@ export function Positioning() {
             </thead>
             <tbody>
               {ROWS.map((r) => (
-                <tr
-                  key={r.metric}
-                  className="group border-t border-white/[0.06] transition-all duration-300 hover:bg-white/[0.015]"
-                >
-                  <td className="px-6 py-5">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-[11px] font-medium tracking-[0.18em] text-ink-400 uppercase">
-                        {r.category}
-                      </span>
-                      <span className="text-[15px] font-medium text-white break-keep">
-                        {r.metric}
-                      </span>
-                    </div>
-                  </td>
-                  {COLS.map((c) => (
-                    <td
-                      key={c.key}
-                      className={`px-6 py-5 transition-colors duration-300 ${
-                        c.accent ? 'bg-[#060606] group-hover:bg-[#0a0a0a]' : ''
-                      }`}
-                    >
-                      <CellRender v={r.values[c.key]} accent={c.accent} />
-                    </td>
-                  ))}
-                </tr>
+                <SpotlightRow key={r.metric} row={r} />
               ))}
             </tbody>
           </table>
