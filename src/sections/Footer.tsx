@@ -18,6 +18,8 @@ export function Footer() {
               <img
                 src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="eTribe"
+                width={80}
+                height={24}
                 className="h-6 w-auto object-contain select-none"
                 draggable={false}
               />

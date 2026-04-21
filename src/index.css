@@ -375,3 +375,28 @@
   100% { stroke-dashoffset: -520; }
 }
 
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .orb-drift-1,
+  .orb-drift-2,
+  .orb-drift-3,
+  .orb-drift-4,
+  .orb-drift-5,
+  .orb-drift-6,
+  .animate-spin-beam {
+    animation: none !important;
+  }
+  .line-h,
+  .line-v,
+  .dot-pop {
+    transform: none;
+    transition: none;
+  }
+}
+

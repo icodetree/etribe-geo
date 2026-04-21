@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, animate, useInView, useScroll, useTransform } from 'motion/react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import type { MotionValue } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
+import { Counter } from '../components/ui/Counter';
 
 const METRICS = [
   { k: 18, u: '년', v: '디지털 SI 에이전시 경력' },
@@ -15,33 +16,6 @@ const TAGS = [
   'Entity Engineering',
   'MARS Pipeline',
 ];
-
-function Counter({ value, suffixContent }: { value: number; suffixContent?: React.ReactNode }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(0, value, {
-        duration: 1.5,
-        ease: "easeOut",
-        delay: 0.3,
-        onUpdate: (latest) => setDisplayValue(Math.floor(latest))
-      });
-      return controls.stop;
-    }
-  }, [isInView, value]);
-
-  return (
-    <div ref={ref} className="inline">
-      <span>
-        {displayValue}
-        {suffixContent}
-      </span>
-    </div>
-  );
-}
 
 function FloatingCard({ metric, index, progress }: { metric: (typeof METRICS)[number]; index: number; progress: MotionValue<number> }) {
   const stagger = index * 0.12;

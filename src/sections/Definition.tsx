@@ -170,7 +170,7 @@ function ConceptRow({ concept: c, index: i }: { concept: (typeof CONCEPTS)[numbe
               ))}
               <div className="mt-1 flex items-center gap-3">
                 <div className="flex-1 h-[3px] rounded-full bg-white/[0.06] overflow-hidden">
-                  <motion.div className="h-full rounded-full bg-gradient-to-r from-brand-red/80 to-brand-red" animate={{ width: ['0%','25%','50%','75%','100%','100%','0%'] }} transition={{ duration: 8, repeat: Infinity, times: [0,0.15,0.30,0.45,0.60,0.75,0.80], ease: 'easeInOut' }} />
+                  <motion.div className="h-full w-full rounded-full bg-gradient-to-r from-brand-red/80 to-brand-red origin-left" animate={{ scaleX: [0,0.25,0.50,0.75,1,1,0] }} transition={{ duration: 8, repeat: Infinity, times: [0,0.15,0.30,0.45,0.60,0.75,0.80], ease: 'easeInOut' }} />
                 </div>
                 <motion.span className="text-[11px] font-semibold tabular-nums w-8 text-right" animate={{ color: ['rgba(255,255,255,0.3)','rgba(255,255,255,0.5)','rgba(255,255,255,0.5)','#fc0011','#fc0011','rgba(255,255,255,0.3)'] }} transition={{ duration: 8, repeat: Infinity, times: [0,0.15,0.45,0.60,0.75,0.80], ease: 'easeInOut' }}>GEO</motion.span>
               </div>

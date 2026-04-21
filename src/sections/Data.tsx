@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useScroll, useTransform, animate } from 'motion/react';
-
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import type { MotionValue } from 'motion/react';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { ScrollDivider } from '../components/ui/ScrollDivider';
+import { Counter } from '../components/ui/Counter';
 
 const ROWS = [
   { query: '제품 추천', rate: 0, tone: 'alarm' as const },
@@ -11,31 +11,6 @@ const ROWS = [
   { query: '핵심 기능 정보', rate: 34, tone: 'neutral' as const },
   { query: '브랜드 직접 검색', rate: 30, tone: 'neutral' as const },
 ];
-
-function Counter({ value, suffixContent }: { value: number; suffixContent?: React.ReactNode }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(0, value, { 
-        duration: 1.5, 
-        ease: "easeOut", 
-        delay: 0.3,
-        onUpdate: (latest) => setDisplayValue(Math.floor(latest))
-      });
-      return controls.stop;
-    }
-  }, [isInView, value]);
-
-  return (
-    <span ref={ref}>
-      {displayValue}
-      {suffixContent}
-    </span>
-  );
-}
 
 function ScrollBar({ rate, tone, progress, index }: { rate: number; tone: 'alarm' | 'neutral'; progress: MotionValue<number>; index: number }) {
   const stagger = index * 0.08;

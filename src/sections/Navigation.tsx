@@ -43,6 +43,8 @@ export function Navigation() {
             <img
               src={`${import.meta.env.BASE_URL}logo.png`}
               alt="eTribe"
+              width={80}
+              height={24}
               className={`w-auto object-contain select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 scrolled ? 'h-[18px]' : 'h-[24px]'
               }`}
